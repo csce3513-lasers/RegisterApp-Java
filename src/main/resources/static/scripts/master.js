@@ -166,3 +166,25 @@ function getErrorMessageDisplayElement() {
 	return document.getElementById("errorMessage");
 }
 // End getters and setters
+
+
+
+
+
+//funciton for sign out button
+function signOutRequest()
+{
+	
+	var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    ajaxDelete(resourceRelativeUri, callback);
+	location.replace("signInView.html");
+    }
+  };
+  xhttp.open("GET", "cd_catalog.xml", true);
+  xhttp.send();
+	
+	
+}
+
