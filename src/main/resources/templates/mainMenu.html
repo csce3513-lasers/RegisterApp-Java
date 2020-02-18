@@ -1,0 +1,58 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Main Menu</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" type="text/css" href="/styles/master.css">
+	<link rel="stylesheet" type="text/css" href="/styles/mainMenu.css">
+
+	<script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/mainMenu.js" defer></script>
+</head>
+
+<body>
+
+	<div class="header">
+		<h1 class="primary-message">Main Menu</h1>
+	</div>
+		
+	<div id="main" class="main">
+		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
+		</div>
+
+
+		<div class="displayMenuWrapper">
+			<br />
+			
+			<button id="startTransactionButton" type="button" class="action">Start Transaction</button>
+			<br />
+			<br />
+			<button id="viewButton" type="button" class="action">View Products</button>
+			<br />
+			<br />
+			<button id="createButton" type="button" class="action">Create Employee</button>
+			<br />
+			<br />
+			<button id="salesButton" type="button" class="action">Sales Report</button>
+			<br />
+			<br />
+			<button id="cashierButton" type="button" class="action">Cashier Report</button>
+		</div>
+
+		<div id="signOutIcon" class="modal animate-opacity-show">
+			<div class="modal-content">
+				<div class="container gray-blue">
+					<h1>
+						<span> <img src="input-24px.svg" alt="Sign Out" width="42" height="42"> </span><br />
+						<span> </span>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+</body>
+
+</html>
