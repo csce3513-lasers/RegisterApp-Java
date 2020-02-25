@@ -182,7 +182,7 @@ function signOutRequest()
 	location.replace("signInView.html");
     }
   };
-  xhttp.open("GET", "cd_catalog.xml", true);
+  
   xhttp.send();
 	
 	
