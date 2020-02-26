@@ -1,11 +1,10 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<title>Main Menu</title>
+	<title>Register - Main Menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
 	<link rel="stylesheet" type="text/css" href="/styles/master.css">
-	<link rel="stylesheet" type="text/css" href="/styles/mainMenu.css">
 
 	<script type="text/javascript" src="/scripts/master.js" defer></script>
 	<script type="text/javascript" src="/scripts/mainMenu.js" defer></script>
@@ -22,7 +21,7 @@
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
-
+		<!-- TODO: Add the various action button elements -->
 		<div class="displayMenuWrapper">
 			<br />
 			
@@ -40,17 +39,26 @@
 			<br />
 			<button id="cashierButton" type="button" class="action">Cashier Report</button>
 		</div>
+	</div>
 
-		<div id="signOutIcon" class="modal animate-opacity-show">
-			<div class="modal-content">
-				<div class="container gray-blue">
-					<h1>
-						<span> <img src="input-24px.svg" alt="Sign Out" width="42" height="42"> </span><br />
-						<span> </span>
-					</h1>
-				</div>
-			</div>
-		</div>
+	<div class="hidden">
+		<input type="checkbox" id="isRefreshed" class="hidden">
+		<script type="text/javascript">
+			window.onunload = function() {
+				const isRefreshedElement = document.getElementById("isRefreshed");
+
+				if(!isRefreshedElement.checked) {
+					isRefreshedElement.checked = true;
+				} else {
+					isRefreshedElement.checked = false;
+					location.reload();
+				}
+			}
+		</script>
+	</div>
+
+	<div class="footer">
+		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
 	</div>
 		
 </body>
