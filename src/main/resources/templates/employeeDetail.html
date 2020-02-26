@@ -22,8 +22,10 @@
 		</div>
 
 		<div class="inputContent">
+		
 			<table id="employeeDetails">
 				<tbody>
+				
 					<tr class="hidden">
 						<td>ID:</td>
 						<td>
@@ -43,26 +45,46 @@
 						</td>
 					</tr>
 					<!-- TODO: Other employee inputs -->
+					<div class="employeeDetailViewWrapper">
+					<br />
+					<form action="/action_page.php">
+						<label for="fname">First name:</label>
+						<input type="text" id="fname" name="fname"><br><br>
+						<label for="lname">Last name:</label>
+						<input type="text" id="lname" name="lname"><br><br>
+						<label for="password">Password:</label>
+						<input type="text" id="password" name="password"><br><br>
+						<label for="verifypw">Verify Password:</label>
+						<input type="text" id="verifypw" name="verifypw"><br><br>
+						<label for="emptype">Employee Type:</label>
+						<select id="emptype">
+							<option value="cashier">Cashier</option>
+							<option value="shiftmanager">Shift Manager</option>
+							<option value="genmanager">General Manager</option>
+						</select>
+				<br><br>
+				<button type="button">Save</button>
+				</div>
+
+			</form>
+			</div>
 				</tbody>
 			</table>
 		</div>
 
 		<!-- TODO: An action element to initiate a save -->
 
-		<div id="employeeSavedAlertModal" class="modal animate-opacity-show">
-			<div class="modal-content">
-				<div class="container gray-blue">
-					<h1>
+		<!--
 						<span>Employee</span><br />
 						<span>Saved</span>
 					</h1>
 				</div>
 			</div>
-		</div>
+		</div>-->
 	</div>
 
 	<div class="footer" th:classappend="${employee.isInitialEmployee} ? hidden : ''">
-		<img id="signOutImage" src="/images/Sign-Out.png" alt="Sign Out" class="footer" />
+		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
 	</div>
 
 </body>
