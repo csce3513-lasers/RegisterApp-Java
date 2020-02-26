@@ -1,0 +1,92 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Register - Employee</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="/styles/master.css">
+
+	<script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/employeeDetail.js" defer></script>
+</head>
+
+<body>
+
+	<div class="header">
+		<h1 class="primary-message">Employee Detail</h1>
+	</div>
+		
+	<div id="main" class="main">
+		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
+		</div>
+
+		<div class="inputContent">
+		
+			<table id="employeeDetails">
+				<tbody>
+				
+					<tr class="hidden">
+						<td>ID:</td>
+						<td>
+							<input id="employeeId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.id} : ''" />
+						</td>
+					</tr>
+					<tr class="hidden">
+						<td>Manager ID:</td>
+						<td>
+							<input id="employeeManagerId" type="hidden" th:value="${!employee.isEmpty} ? ${employee.managerId} : ''" />
+						</td>
+					</tr>
+					<tr th:class="${employee.isEmpty} ? hidden : ''">
+						<td class="label">Employee ID:</td>
+						<td>
+							<input id="employeeEmployeeId" type="text" th:value="${!employee.isEmpty} ? ${employee.employeeId} : ''" class="update" disabled />
+						</td>
+					</tr>
+					<!-- TODO: Other employee inputs -->
+					<div class="employeeDetailViewWrapper">
+					<br />
+					<form action="/action_page.php">
+						<label for="fname">First name:</label>
+						<input type="text" id="fname" name="fname"><br><br>
+						<label for="lname">Last name:</label>
+						<input type="text" id="lname" name="lname"><br><br>
+						<label for="password">Password:</label>
+						<input type="text" id="password" name="password"><br><br>
+						<label for="verifypw">Verify Password:</label>
+						<input type="text" id="verifypw" name="verifypw"><br><br>
+						<label for="emptype">Employee Type:</label>
+						<select id="emptype">
+							<option value="cashier">Cashier</option>
+							<option value="shiftmanager">Shift Manager</option>
+							<option value="genmanager">General Manager</option>
+						</select>
+				<br><br>
+				<button type="button">Save</button>
+				</div>
+
+			</form>
+			</div>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- TODO: An action element to initiate a save -->
+
+		<!--
+						<span>Employee</span><br />
+						<span>Saved</span>
+					</h1>
+				</div>
+			</div>
+		</div>-->
+	</div>
+
+	<div class="footer" th:classappend="${employee.isInitialEmployee} ? hidden : ''">
+		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
+	</div>
+
+</body>
+
+</html>
