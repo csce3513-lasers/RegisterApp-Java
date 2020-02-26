@@ -1,0 +1,70 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Employee Detail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" type="text/css" href="/styles/master.css">
+	<link rel="stylesheet" type="text/css" href="/styles/employeeDetailView.css">
+
+	<script type="text/javascript" src="/scripts/master.js" defer></script>
+	<script type="text/javascript" src="/scripts/employeeDetailView.js" defer></script>
+</head>
+
+<body>
+
+	<div class="header">
+		<h1 class="primary-message">Employee Detail</h1>
+	</div>
+		
+	<div id="main" class="main">
+		<div id="error" th:class="${#strings.isEmpty(errorMessage)} ? hidden : ''">
+			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
+		</div>
+
+
+		<div class="employeeDetailViewWrapper">
+			<br />
+			
+			<form action="/action_page.php">
+				<label for="redid">Employee Record ID:</label>
+				<input type="hidden" id="recid" name="recid"><br><br>
+				<label for="empid">Employee ID:</label>
+				<input type="text" id="empid" name="empid" disabled><br><br>
+				<label for="fname">First name:</label>
+				<input type="text" id="fname" name="fname"><br><br>
+				<label for="lname">Last name:</label>
+				<input type="text" id="lname" name="lname"><br><br>
+				<label for="password">Password:</label>
+				<input type="text" id="password" name="password"><br><br>
+				<label for="verifypw">Verify Password:</label>
+				<input type="text" id="verifypw" name="verifypw"><br><br>
+				<label for="emptype">Employee Type:</label>
+					<select id="emptype">
+					  <option value="cashier">Cashier</option>
+					  <option value="shiftmanager">Shift Manager</option>
+					  <option value="genmanager">General Manager</option>
+					</select>
+				<br><br>
+				<button type="button">Save</button>
+				</div>
+
+		<div id="signOutIcon" class="modal animate-opacity-show">
+			<div class="modal-content">
+				<div class="container gray-blue">
+					<h1>
+						<span> <img src="input-24px.svg" alt="Sign Out" width="42" height="42"> </span><br />
+						<span> </span>
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+			</form>
+		</div>
+
+	</div>
+		
+</body>
+
+</html>
