@@ -49,11 +49,11 @@
 					<br />
 					<form action="/action_page.php">
 						<label for="fname">First name:</label>
-						<input type="text" id="fname" name="fname"><p id="fnameErr"></p><br><br>
+						<input type="text" id="fname" name="fname"><p id="fnameErr"></p>
 						<label for="lname">Last name:</label>
-						<input type="text" id="lname" name="lname"><p id="lnameErr"></p><br><br>
+						<input type="text" id="lname" name="lname"><p id="lnameErr"></p>
 						<label for="password">Password:</label>
-						<input type="text" id="password" name="password"><p id="passwordErr"></p><br><br>
+						<input type="text" id="password" name="password"><p id="passwordErr"></p>
 						<label for="verifypw">Verify Password:</label>
 						<input type="text" id="verifypw" name="verifypw"><br><br>
 						<label for="emptype">Employee Type:</label>
@@ -96,13 +96,19 @@
 	var checkPass2 = document.getElementById("verifypw").value;
 	if (checkFirst == ""){
 						document.getElementById("fnameErr").innerHTML = "First name is empty. Please enter your first name."; 
+						document.getElementById("lnameErr").innerHTML = "";
+						document.getElementById("passwordErr").innerHTML = "";
 						return false;
 					} 
 	if (checkLast == ""){
+						document.getElementById("fnameErr").innerHTML = "";
 						document.getElementById("lnameErr").innerHTML= "Last name is empty. Please enter your last name.";
+						document.getElementById("passwordErr").innerHTML = "";
 						return false;
 					} 
 	if (checkPass != checkPass2){
+						document.getElementById("fnameErr").innerHTML = "";
+						document.getElementById("lnameErr").innerHTML = "";
 						document.getElementById("passwordErr").innerHTML = "Passwords do not match. Please ensure your password and its verfication match.";
 						return false;
 					} 
