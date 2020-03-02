@@ -49,11 +49,11 @@
 					<br />
 					<form action="/action_page.php">
 						<label for="fname">First name:</label>
-						<input type="text" id="fname" name="fname"><br><br>
+						<input type="text" id="fname" name="fname"><p id="fnameErr"></p><br><br>
 						<label for="lname">Last name:</label>
-						<input type="text" id="lname" name="lname"><br><br>
+						<input type="text" id="lname" name="lname"><p id="lnameErr"></p><br><br>
 						<label for="password">Password:</label>
-						<input type="text" id="password" name="password"><br><br>
+						<input type="text" id="password" name="password"><p id="passwordErr"></p><br><br>
 						<label for="verifypw">Verify Password:</label>
 						<input type="text" id="verifypw" name="verifypw"><br><br>
 						<label for="emptype">Employee Type:</label>
@@ -63,7 +63,7 @@
 							<option value="genmanager">General Manager</option>
 						</select>
 				<br><br>
-				<button type="button">Save</button>
+				<button id="saveBtn" type="button">Save</button>
 				</div>
 
 			</form>
@@ -87,6 +87,29 @@
 		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
 	</div>
 
+	<!-- TODO: HTTP request via AJAX to save employee details-->
+<script>
+	document.getElementById("saveBtn").addEventListener("click", function(){
+	var checkFirst = document.getElementById("fname").value;
+	var checkLast = document.getElementById("lname").value;
+	var checkPass = document.getElementById("password").value;
+	var checkPass2 = document.getElementById("verifypw").value;
+	if (checkFirst == ""){
+						document.getElementById("fnameErr").innerHTML = "First name is empty. Please enter your first name."; 
+						return false;
+					} 
+	if (checkLast == ""){
+						document.getElementById("lnameErr").innerHTML= "Last name is empty. Please enter your last name.";
+						return false;
+					} 
+	if (checkPass != checkPass2){
+						document.getElementById("passwordErr").innerHTML = "Passwords do not match. Please ensure your password and its verfication match.";
+						return false;
+					} 
+					
+	
+});
+</script>
 </body>
 
 </html>
