@@ -43,7 +43,13 @@ public class EmployeeDetailRouteController extends HttpServlet {
         	return new ModelAndView("MainMenueVeiw.html");
         }*/
 		
+		
+		@RequestMapping(value = "/employeeDetail/{employeeId}", method = RequestMethod.GET)
+	public ModelAndView existingEmployee(@PathVariable Map<String, String> pathVarsMap, HttpServletRequest request )
+	{
+		
 	}
+	
 	
 	
 	
