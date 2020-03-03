@@ -1,29 +1,29 @@
-package models.API;
+package models.api;
 
 import javax.validation.constraints.NotNull;
 
 public class EmployeeSignIn {
-    
+
     @NotNull
-    private String employeeID;
-    
+    private String employeeId;
+
     @NotNull
     private String password;
-    
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public String getEmployeeID() {
-        return employeeID;
+
+    public String getEmployeeId() {
+        return employeeId;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
 }
