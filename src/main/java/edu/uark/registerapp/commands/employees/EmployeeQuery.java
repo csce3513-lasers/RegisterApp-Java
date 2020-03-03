@@ -17,7 +17,7 @@ public class EmployeeQuery implements ResultCommandInterface<Employee> {
 	@Override
 	public Employee execute() {
 		final Optional<EmployeeEntity> EmployeeEntity =
-			this.EmployeeRepository.findById() (this.EmployeeRecordId);
+			this.EmployeeRepository.findById(this.EmployeeRecordId);
 		if (EmployeeEntity.isPresent()) {
 			return new Employee(EmployeeEntity.get());
 		} else {
