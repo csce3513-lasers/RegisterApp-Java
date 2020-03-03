@@ -32,43 +32,19 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 	// Helper methods
 	private void validateProperties() {
-		if (StringUtils.isBlank(this.apiEmployee.getLookupCode())) {
+		if (StringUtils.isBlank(this.apiEmployee.getId())) {
 			throw new UnprocessableEntityException("lookupcode");
-		}
-	}
-	public void validateEmployee(){
-		Employee employee = this.getApiEmployee();
-
-		if(employee.getFirstName().isEmpty()){
-			throw new UnprocessableEntityException("First Name cannot be blank");
-		}
-
-		if(employee.getLastName().isEmpty()){
-			throw new UnprocessableEntityException("Last Name cannot be blank");
-		}
-
-		if(employee.getPassword().isEmpty()){
-			throw new UnprocessableEntityException("Password cannot be blank");
-		}
-	}
-
-	public void setDefaultsForEmployee(){
-		Employee employee =this.getApiEmployee();
-
-		if (this.IsInitialEmployee()){
-			//general manager
 		}
 	}
 
 	@Transactional
 	private EmployeeEntity createEmployeeEntity() {
 		final Optional<EmployeeEntity> queriedEmployeeEntity =
-			this.EmployeeRepository
-				.findByLookupCode(this.apiEmployee.getLookupCode());
+			this.EmployeeRepository.findById(this.apiEmployee.getId());
 
 		if (queriedEmployeeEntity.isPresent()) {
 			// Lookupcode already defined for another Employee.
-			throw new ConflictException("lookupcode");
+			throw new ConflictException("Id");
 		}
 
 		// No ENTITY object was returned from the database, thus the API object's
@@ -81,21 +57,12 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 	// Properties
 	private Employee apiEmployee;
-	private boolean setIsInitialEmployeeFlag;
-
 	public Employee getApiEmployee() {
 		return this.apiEmployee;
 	}
-
 	public EmployeeCreateCommand setApiEmployee(final Employee apiEmployee) {
 		this.apiEmployee = apiEmployee;
 		return this;
-	}
-	public void setIsInitialEmployee(bool IsInitialEmployee){
-		this.IsInitialEmployeeFlag = IsInitialEmployee;
-	}
-	public boolean sIsInitialEmployee(){
-		return this.sIsInitialEmployeeFlag;
 	}
 
 	@Autowired
