@@ -10,7 +10,7 @@ public class Employee extends ApiResponse
 	private String password=" ";
 	private boolean isActive=false;
 	private int classification=0; 
-	private Sting createdOn=" ";
+	private String createdOn=" ";
 	private boolean isInitaitalEmployee= true;
 	private UUId id;
 	private UUID managerId;
@@ -28,7 +28,7 @@ public class Employee extends ApiResponse
 	}
 	public void setEmployeeId(String id)
 	{
-		emplyeeid=id;
+		employeeid=id;
 	}
 	
 	public void setFirstName(String name)
@@ -60,18 +60,18 @@ public class Employee extends ApiResponse
 	
 	public String getEmployeeId()
 	{
-		return emplyeeid;
+		return employeeid;
 	}
 	
-	public void getFirstName()
+	public String getFirstName()
 	{
 		return firstName;
 	}
-	public string getLastName()
+	public String getLastName()
 	{
 		return lastName;
 	}
-	public string getPassword(String password)
+	public String getPassword(String password)
 	{
 		return password;
 	}
