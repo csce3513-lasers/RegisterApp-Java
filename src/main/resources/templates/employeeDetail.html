@@ -47,13 +47,12 @@
 					<!-- TODO: Other employee inputs -->
 					<div class="employeeDetailViewWrapper">
 					<br />
-					<form action="/action_page.php">
 						<label for="fname">First name:</label>
-						<input type="text" id="fname" name="fname"><br><br>
+						<input type="text" id="fname" name="fname"><p id="fnameErr"></p><br>
 						<label for="lname">Last name:</label>
-						<input type="text" id="lname" name="lname"><br><br>
+						<input type="text" id="lname" name="lname"><p id="lnameErr"></p><br>
 						<label for="password">Password:</label>
-						<input type="text" id="password" name="password"><br><br>
+						<input type="text" id="password" name="password"><p id="passwordErr"></p><br>
 						<label for="verifypw">Verify Password:</label>
 						<input type="text" id="verifypw" name="verifypw"><br><br>
 						<label for="emptype">Employee Type:</label>
@@ -63,7 +62,7 @@
 							<option value="genmanager">General Manager</option>
 						</select>
 				<br><br>
-				<button type="button">Save</button>
+				<button id="saveButton" type="button">Save</button>
 				</div>
 
 			</form>
@@ -72,9 +71,10 @@
 			</table>
 		</div>
 
-		<!-- TODO: An action element to initiate a save -->
-
-		<!--
+		<div id="employeeSavedAlertModal" class="modal animate-opacity-show">
+			<div class="modal-content">
+				<div class="container gray-blue">
+					<h1>
 						<span>Employee</span><br />
 						<span>Saved</span>
 					</h1>
@@ -87,6 +87,57 @@
 		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
 	</div>
 
+	<!-- TODO: HTTP request via AJAX to save employee details-->
+<script>
+	document.getElementById("saveBtn").addEventListener("click", function(){
+	const saveActionElement = event.target;
+	saveActionElement.disabled = true;
+	var checkFirst = document.getElementById("fname").value;
+	var checkLast = document.getElementById("lname").value;
+	var checkPass = document.getElementById("password").value;
+	var checkPass2 = document.getElementById("verifypw").value;
+	var empType = document.getElementById("emptype").value;
+	if (checkFirst == ""){
+						document.getElementById("fnameErr").innerHTML = "First name is empty. Please enter your first name."; 
+						document.getElementById("lnameErr").innerHTML = "";
+						document.getElementById("passwordErr").innerHTML = "";
+						return false;
+					} 
+	if (checkLast == ""){
+						document.getElementById("fnameErr").innerHTML = "";
+						document.getElementById("lnameErr").innerHTML= "Last name is empty. Please enter your last name.";
+						document.getElementById("passwordErr").innerHTML = "";
+						return false;
+					} 
+	if (checkPass != checkPass2){
+						document.getElementById("fnameErr").innerHTML = "";
+						document.getElementById("lnameErr").innerHTML = "";
+						document.getElementById("passwordErr").innerHTML = "Passwords do not match. Please ensure your password and its verfication match.";
+						return false;
+					} 
+	const employeeId = getEmployeeId(); 
+	const employeeIdIsDefined = ((employeeID != null) && (employeeID.trim() !== ""));
+	const saveActionUrl = ("/employeeDetail/"
+		+ (employeeIDIsDefined ? employeeID : ""));
+	const saveEmployeeRequest = {
+		fname: checkFirst,
+		lname: checkLast,
+		password: checkPass,
+		emptype: empType
+	};
+
+	if (employeeIdIsDefined) {
+		ajaxPut(saveActionUrl, saveEmployeeRequest, (callbackResponse) => {
+			saveActionElement.disabled = false;
+		});
+	} else {
+		ajaxPost(saveActionUrl, saveProductRequest, (callbackResponse) => {
+			saveActionElement.disabled = false;
+		});
+	}			
+	
+});
+</script>
 </body>
 
 </html>

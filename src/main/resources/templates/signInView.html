@@ -23,12 +23,13 @@
 
 		<div class="loginWrapper">
 			<div>
-				<form onsubmit="validateSignIn()" action="/action_page.php" method="POST">
+				<!--Login form. Gathers employee ID (empID) and password (passWord). Then validates against validateSignIn on submission -->
+				<form onsubmit="validateSignIn()" action="/" method="POST">
                     <label for="empID">Employee ID:</label>
                     <input type="number" id="empID" name="empID"><br><br>
                     <label for="passWord">Password:</label>
                     <input type="password" id="passWord" name="passWord"><br><br>
-                    <input type="submit" value="Sign-In">
+                    <input type="submit" value="Sign In">
                   </form>
 			</div>
 		</div>
@@ -36,9 +37,25 @@
 		<div class="hidden">
 			<input type="checkbox" id="isRefreshed" class="hidden">
 			<script type="text/javascript">
+			//validation function, checks if employee ID/password are empty, and if employee ID is a number
 				function validateSignIn(){
-                    
-                }
+					var checkID = document.getElementById("empID").value;
+					var checkPass = document.getElementById("passWord").value;
+
+					if (checkID == ""){
+						alert("Employee ID is empty. Please enter an employee ID.");
+						return false;
+					}
+					if (isNaN(checkID)){
+						alert("Please enter the numbers corresponding to your employee ID.");
+						return false;
+					}
+					if (checkPass==""){
+						alert("Please enter your password.");
+						return false;
+					}
+					return true;
+				 }
 			</script>
 		</div>
 	</div>

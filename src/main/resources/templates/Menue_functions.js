@@ -17,5 +17,5 @@ function goToProductListing()
 
 function goToNewEmployee()
 {
-	location.assign("employeeDetail.html);
+	location.assign("employeeDetail.html");
 }

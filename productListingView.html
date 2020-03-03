@@ -1,0 +1,21 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Product Listing</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+</head>
+
+<body>
+	<h1 class="primary-message">Product Listing</h1>
+	<div>
+		<button th:if="${elevatedUser} ?: false" onclick="window.location.href = '/productdetail.html';" type="button">Create new</button><br th:if="${elevatedUser}">
+        <label>Product 1</label><br>
+		<label>Product 2</label><br>
+		<label>Product N</label><br>
+		<button onclick="window.location.href='/signout.html';" type="button">Sign out</button>
+	</div>
+
+</body>
+
+</html>
