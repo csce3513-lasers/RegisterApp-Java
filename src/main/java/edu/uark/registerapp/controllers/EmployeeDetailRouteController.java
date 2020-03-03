@@ -26,7 +26,6 @@ public class EmployeeDetailRouteController extends HttpServlet {
 		/*/ if (!employeeExists || !elavated)
 		{
 			ModelAndView m = new ModelAndView("EmployeeDetail.html");
-        	m.setViewName("employee detail")
         	return m;
         	
         	
@@ -34,7 +33,7 @@ public class EmployeeDetailRouteController extends HttpServlet {
 		else if (!requst.isRequestedSessionIdValid)
         {
         	ModelAndView m = new ModelAndView("SignInVeiw.html");
-        	m.setViewName("sign in")
+        	
         	m.setErrorMessage("Invalid session id");
         	return m;
         }
@@ -45,8 +44,27 @@ public class EmployeeDetailRouteController extends HttpServlet {
 		
 		
 		@RequestMapping(value = "/employeeDetail/{employeeId}", method = RequestMethod.GET)
-	public ModelAndView existingEmployee(@PathVariable Map<String, String> pathVarsMap, HttpServletRequest request )
+	public ModelAndView existingEmployee(@PathVariable Map<String, String> UUID, @RequestParam Map<String,String> Arguments, HttpServletRequest request )
 	{
+		/*if (!activeUser)
+		{
+			model=new ModelMap();
+			model.addAttribute("signInVeiw.html", "redirectWithRedirectPrefix");
+			return new ModelAndView("redirect:/redirectedUrl", model);
+		}
+		else if (!elevatded)
+		{
+			model=new ModelMap();
+			model.addAttribute("mainMenueVeiw.html", "redirectWithRedirectPrefix");
+			return new ModelAndView("redirect:/redirectedUrl", model);
+		}
+		
+		else
+		{
+			//query code for employee information
+			ModelAndView m = new ModelAndView("EmployeeDetail.html");
+        	return m;
+		}
 		
 	}
 	
