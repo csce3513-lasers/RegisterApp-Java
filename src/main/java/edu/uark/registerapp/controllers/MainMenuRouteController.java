@@ -42,4 +42,4 @@ public class MainMenuRouteController extends BaseRouteController {
 		
 		return modelAndView;
 	}
-}
+

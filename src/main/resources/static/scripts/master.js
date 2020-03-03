@@ -1,10 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-	const signOutActionElement = getSignOutActionElement();
-	if (signOutActionElement != null) {
-		signOutActionElement.addEventListener("click", signOutActionClickHandler);
-	}
-});
-
 // AJAX
 function ajaxGet(resourceRelativeUri, callback) {
 	return ajax(resourceRelativeUri, "GET", null, callback);
@@ -165,10 +158,6 @@ function displayError(errorMessage) {
 // End display error message
 
 //Getters and setters
-function getSignOutActionElement() {
-	return document.getElementById("signOutImage");
-}
-
 function getErrorMessageContainerElement() {
 	return document.getElementById("error");
 }
@@ -178,17 +167,24 @@ function getErrorMessageDisplayElement() {
 }
 // End getters and setters
 
-//Sign out
-function signOutActionClickHandler() {
-	ajaxDelete("/api/signOut", (callbackResponse) => {
-		if ((callbackResponse.data != null)
-			&& (callbackResponse.data.redirectUrl != null)
-			&& (callbackResponse.data.redirectUrl !== "")) {
+
+
+
+
+//funciton for sign out button
+function signOutRequest()
+{
 	
-			window.location.replace(callbackResponse.data.redirectUrl);
-		} else {
-			window.location.replace("/");
-		}
-	});
+	var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    ajaxDelete(resourceRelativeUri, callback);
+	location.replace("signInView.html");
+    }
+  };
+  
+  xhttp.send();
+	
+	
 }
-//End sign out
+
