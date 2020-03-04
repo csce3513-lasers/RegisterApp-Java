@@ -1,6 +1,7 @@
 package edu.uark.registerapp.commands.employees;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -32,7 +33,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 	// Helper methods
 	private void validateProperties() {
-		if (StringUtils.isBlank(this.apiEmployee.getId())) {
+		if (StringUtils.isBlank(this.apiEmployee.getId().toString())) {
 			throw new UnprocessableEntityException("Id");
 		}
 	}
@@ -57,6 +58,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 		if (this.IsInitialEmployee()) {
 			// general manager
+			employee.setManagerId(UUID.randomUUID());
 		}
 	}
 
@@ -81,7 +83,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 	// Properties
 	private Employee apiEmployee;
-	private boolean setIsInitialEmployeeFlag;
+	//private boolean setIsInitialEmployeeFlag;
 	private boolean IsInitialEmployeeFlag;
 
 	public Employee getApiEmployee() {

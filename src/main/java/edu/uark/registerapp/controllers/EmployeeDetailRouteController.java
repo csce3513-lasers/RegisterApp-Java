@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
+import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
+import edu.uark.registerapp.controllers.enums.QueryParameterMessages;
+import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Employee;
@@ -48,7 +51,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		}
 		else
 		{
+<<<<<<< HEAD
 			return super.builldNoPermissionResponse();
+=======
+			
+>>>>>>> 9ef047ec8538a00f87e92ef7eed5bd87af6f1ea4
 		}
 		
 		//  is able to create an employee
@@ -58,7 +65,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		
 	}
 
-	@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employeeDetail/{employeeId}", method = RequestMethod.GET)
 	public ModelAndView startWithEmployee(
 		@PathVariable final UUID employeeId,
 		@RequestParam final Map<String, String> queryParameters,
@@ -87,7 +94,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	// Helper methods
 	private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
+<<<<<<< HEAD
 		if()
+=======
+		if(ActiveEmployeeExistsQuery())
+>>>>>>> 9ef047ec8538a00f87e92ef7eed5bd87af6f1ea4
 		{
 			return true;
 		}
