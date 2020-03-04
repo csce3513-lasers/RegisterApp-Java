@@ -78,15 +78,15 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		if (!activeUserEntity.isPresent()) {
 			return this.buildInvalidSessionResponse();
 		} else if (!this.isElevatedUser(activeUserEntity.get())) {
-			return this.super.buildNoPermissionsResponse();
+			return this.buildNoPermissionsResponse();
 		}
 
 		// TODO: Query the employee details using the request route parameter
 		else
-		{
+		{/*
 			UUID employee=queryParameters[employeeId];
 			EmployeeQuery query=this.setEmployeeRecordId(employee).execute();
-		}
+		}*/
 		// TODO: Serve up the page
 		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
 	}
@@ -95,14 +95,14 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
 
-		if()
+		
 
 		
 
 		{
 			return true;
 		}
-		else
+		
 		{
 			return false;
 		}
