@@ -36,11 +36,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-<<<<<<< HEAD
-		if(super.isElevatedUser(activeUserEntity))
-=======
 		if(super.isElevatedUser(CurrentUser))
->>>>>>> 9bbd0faa69d412583068049674cc5da98b8d2dd7
 		{
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(
