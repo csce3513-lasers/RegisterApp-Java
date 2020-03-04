@@ -16,7 +16,7 @@ import edu.uark.registerapp.controllers.enums.QueryParameterMessages;
 import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
-import edu.uark.registerapp.models.enums.EmployeeClassification;
+import edu.uark.registerapp.models.EmployeeClassification;
 
 public abstract class BaseRouteController extends BaseController {
 	protected ModelAndView setErrorMessageFromQueryString(
