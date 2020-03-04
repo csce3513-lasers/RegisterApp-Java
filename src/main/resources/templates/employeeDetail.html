@@ -84,7 +84,7 @@
 	</div>
 
 	<div class="footer" th:classappend="${employee.isInitialEmployee} ? hidden : ''">
-		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" />
+		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" onclick="window.location.href='/api/signOut';" />
 	</div>
 
 	<!-- TODO: HTTP request via AJAX to save employee details-->
