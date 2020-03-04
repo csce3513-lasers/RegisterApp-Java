@@ -34,7 +34,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		final HttpServletRequest request
 	) 
 	{
-		final Optional<ActiveUserEntity> activeUserEntity =
+		final Optional <ActiveUserEntity> activeUserEntity =
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
