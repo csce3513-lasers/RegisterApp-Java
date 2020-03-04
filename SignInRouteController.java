@@ -45,7 +45,7 @@ public class SignInRouteController {
         String sessionId = session.getId();
         try {
             EmployeeSignInCommand employeeSignInCommand = new EmployeeSignInCommand(employeeSignIn, sessionId);
-            modelAndView = new ModelAndView("mainMenu"); 
+            modelAndView = new ModelAndView("redirect:/mainMenu"); 
         }
         catch(UnprocessableEntityException e){ //could not catch another NotFoundException
             modelAndView = new ModelAndView("signInView");
