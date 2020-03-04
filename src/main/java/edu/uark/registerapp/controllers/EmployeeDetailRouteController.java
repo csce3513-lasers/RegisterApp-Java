@@ -26,6 +26,8 @@ import edu.uark.registerapp.models.entities.ActiveUserEntity;
 @Controller
 @RequestMapping(value = "/employeeDetail")
 public class EmployeeDetailRouteController extends BaseRouteController {
+	private static final ActiveUserEntity CurrentUser = null;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView start(
 		@RequestParam final Map<String, String> queryParameters,

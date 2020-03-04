@@ -21,7 +21,7 @@ public class ActiveUserDeleteCommand implements VoidCommandInterface {
     public void execute() {
 	final Optional<ActiveUserEntity> activeUserEntity = activeUserRepository.findBySessionKey(sessionKey);
         if (activeUserEntity.isPresent()) {
-            if(!activeUserEntity.get().getName().isBlank().toString()) { //Validate the incoming Employee request object, first name should not be blank, last name should not be blank?
+            if(StringUtils.isBlank(activeUserEntity.get().getName())) { //Validate the incoming Employee request object, first name should not be blank, last name should not be blank?
                 this.activeUserRepository.delete(activeUserEntity.get());
             }
             else {
