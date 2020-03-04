@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
@@ -39,8 +40,8 @@ public class SignInRouteController extends BaseRouteController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView performSignIn(EmployeeSignIn employeeSignIn, HttpServletRequest request) {
 
-        employeeSignIn.setEmployeeId(req.getParameter("empID"));
-        employeeSignIn.setPassword(req.getParameter("passWord"));
+        employeeSignIn.setEmployeeId(request.getParameter("empID"));
+        employeeSignIn.setPassword(request.getParameter("passWord"));
 		
         try {
             EmployeeSignInCommand employeeSignInCommand = new EmployeeSignInCommand(employeeSignIn, request.getSession().getId());
