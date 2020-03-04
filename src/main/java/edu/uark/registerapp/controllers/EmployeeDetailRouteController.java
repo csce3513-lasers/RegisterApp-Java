@@ -44,11 +44,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		}
 		else if(CurrentUser==null)
 		{
-			return buildInvalidSessionResponse();
+			return super.buildInvalidSessionResponse();
 		}
 		else
 		{
-			return builldNoPermissionResponse();
+			return super.builldNoPermissionResponse();
 		}
 		
 		//  is able to create an employee
@@ -71,13 +71,13 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		if (!activeUserEntity.isPresent()) {
 			return this.buildInvalidSessionResponse();
 		} else if (!this.isElevatedUser(activeUserEntity.get())) {
-			return this.buildNoPermissionsResponse();
+			return this.super.buildNoPermissionsResponse();
 		}
 
 		// TODO: Query the employee details using the request route parameter
 		else
 		{
-			employee=queryParameters[employeeId];
+			UUID employee=queryParameters[employeeId];
 			employeeQuery query=this.setEmployeeRecordId(employee).execute();
 		}
 		// TODO: Serve up the page
@@ -87,7 +87,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	// Helper methods
 	private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
-		if(activeEmployeeExistsQuery())
+		if()
 		{
 			return true;
 		}
