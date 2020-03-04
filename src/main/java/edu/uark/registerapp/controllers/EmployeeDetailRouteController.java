@@ -79,7 +79,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 
 		if (!activeUserEntity.isPresent()) {
 			return this.buildInvalidSessionResponse();
-		} else if (!this.isElevatedUser(activeUserEntity.get())) {
+		} else if (!this.isElevatedUser(activeUserEntity)) {
 			return this.buildNoPermissionsResponse();
 		}
 
