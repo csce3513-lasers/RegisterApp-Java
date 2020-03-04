@@ -35,7 +35,7 @@ public class EmployeeRestController extends BaseRestController {
 
 		try {
 			// TODO: Query if any active employees exist
-			this.EmployeeQuery.excute();
+			this.EmployeeQuery.execute();
 			
 
 			canCreateEmployeeResponse =
