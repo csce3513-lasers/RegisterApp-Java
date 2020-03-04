@@ -36,7 +36,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-		if(super.isElevatedUser(CurrentUser))
+		if(isElevatedUser(activeUserEntity))
 		{
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(
@@ -45,13 +45,13 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 						QueryParameterNames.ERROR_CODE.getValue(),
 						QueryParameterMessages.SESSION_NOT_ACTIVE.getKeyAsString()))));
 		}
-		else if(CurrentUser==null)
+		else if(activeUserEntity==null)
 		{
 			return buildInvalidSessionResponse();
 		}
 		else
 		{
-			return buildNoPermissionResponse();
+			return buildNoPermissionsResponse();
 		}
 		
 		//  is able to create an employee
