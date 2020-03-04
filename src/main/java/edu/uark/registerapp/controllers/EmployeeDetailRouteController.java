@@ -35,11 +35,14 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		final HttpServletRequest request
 	) 
 	{
-		final Optional<ActiveUserEntity> activeUserEntity =
+		final Optional <ActiveUserEntity> activeUserEntity =
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-		if(super.isElevatedUser(CurrentUser.get()))
+
+
+		if(isElevatedUser(activeUserEntity))
+
 		{
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(
@@ -48,13 +51,13 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 						QueryParameterNames.ERROR_CODE.getValue(),
 						QueryParameterMessages.SESSION_NOT_ACTIVE.getKeyAsString()))));
 		}
-		else if(CurrentUser==null)
+		else if(activeUserEntity==null)
 		{
 			return buildInvalidSessionResponse();
 		}
 		else
 		{
-			return buildInvalidSessionResponse();
+			return buildNoPermissionsResponse();
 		}
 		
 		//  is able to create an employee
