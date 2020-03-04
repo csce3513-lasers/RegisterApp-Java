@@ -3,11 +3,11 @@ package edu.uark.registerapp.commands.activeUsers;
 import edu.uark.registerapp.commands.VoidCommandInterface;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.repositories.ActiveUserRepository;
+import edu.uark.registerapp.commands.exceptions.NotFoundException;
 
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
