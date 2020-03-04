@@ -33,16 +33,29 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-		if(CurrentUser.getElevated())
+		if(isElevatedUser(CurrentUser))
 		{
-			
+			return new ModelAndView(
+			REDIRECT_PREPEND.concat(
+				ViewNames.EmployeeDetail.getRoute().concat(
+					this.buildInitialQueryParameter(
+						QueryParameterNames.ERROR_CODE.getValue(),
+						QueryParameterMessages.SESSION_NOT_ACTIVE.getKeyAsString()))));
+		}
+		else if(CurrentUser==null)
+		{
+			return buildInvalidSessionResponse();
+		}
+		else
+		{
+			return builldNoPermissionResponse();
 		}
 		
 		//  is able to create an employee
 		
 		
 
-		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
+		
 	}
 
 	@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
@@ -62,6 +75,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		}
 
 		// TODO: Query the employee details using the request route parameter
+		else
+		{
+			employee=queryParameters[employeeId];
+			employeeQuery query=this.setEmployeeRecordId(employee).execute();
+		}
 		// TODO: Serve up the page
 		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
 	}
@@ -74,7 +92,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			return true;
 		}
 		else
-		{
+		{f
 			return false;
 		}
 	}
