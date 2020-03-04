@@ -12,7 +12,7 @@ import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.acls.model.NotFoundException;
+//import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 public class EmployeeSignInCommand {
@@ -33,7 +33,7 @@ public class EmployeeSignInCommand {
 	if (!StringUtils.isNumeric(employeeSignIn.getEmployeeId())) { //checks numeric and blank
             throw new UnprocessableEntityException("employeeId");
         }
-        if(employeeSignIn.getPassword().isBlank()) {
+        if(StringUtils.isBlank(employeeSignIn.getPassword())) {
             throw new UnprocessableEntityException("password");
         }
     }
