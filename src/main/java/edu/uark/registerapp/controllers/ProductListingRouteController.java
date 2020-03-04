@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import edu.uark.registerapp.commands.products.ProductsQuery;
+import edu.uark.registerapp.commands.products.ProductQuery;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
@@ -37,7 +37,7 @@ public class ProductListingRouteController {
             }
         }
         try {
-            modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), this.ProductsQuery.execute());
+            modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), this.productQuery.execute());
         } catch (final Exception e) {
             modelAndView.addObject(ViewModelNames.ERROR_MESSAGE.getValue(), e.getMessage());
             modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), (new Product[0]));
@@ -48,4 +48,5 @@ public class ProductListingRouteController {
     // Properties
     @Autowired
     ActiveUserRepository activeUserRepository;
+	private ProductQuery productQuery;
 }
