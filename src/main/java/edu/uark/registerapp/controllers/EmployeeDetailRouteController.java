@@ -92,7 +92,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	}
 
 	// Helper methods
-	private boolean activeUserExists() {
+	/*private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
 
 		
@@ -106,5 +106,6 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		{
 			return false;
 		}
-	}
+	}*/
+}
 }
