@@ -32,7 +32,7 @@ public class EmployeeCreateCommand implements ResultCommandInterface<Employee> {
 
 	// Helper methods
 	private void validateProperties() {
-		if (StringUtils.isBlank(this.apiEmployee.getId())) {
+		if (StringUtils.isBlank(this.apiEmployee.getId().toString())) {
 			throw new UnprocessableEntityException("Id");
 		}
 	}
