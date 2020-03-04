@@ -37,7 +37,7 @@ public class ProductListingRouteController {
             }
         }
         try {
-            modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), this.productsQuery.execute());
+            modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), this.ProductsQuery.execute());
         } catch (final Exception e) {
             modelAndView.addObject(ViewModelNames.ERROR_MESSAGE.getValue(), e.getMessage());
             modelAndView.addObject(ViewModelNames.PRODUCTS.getValue(), (new Product[0]));
