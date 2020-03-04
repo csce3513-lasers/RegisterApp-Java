@@ -2,6 +2,9 @@ package edu.uark.registerapp.controllers;
 
 import edu.uark.registerapp.commands.activeUsers.ActiveUserDeleteCommand;
 import edu.uark.registerapp.models.api.ApiResponse;
+import edu.uark.registerapp.commands.activeUsers.ActiveUserDeleteCommand;
+import edu.uark.registerapp.controllers.enums.ViewNames;
+import edu.uark.registerapp.controllers.BaseRestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,11 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import edu.uark.registerapp.commands.activeUsers.ActiveUserDeleteCommand;
-import edu.uark.registerapp.controllers.enums.ViewNames;
-import edu.uark.registerapp.models.api.ApiResponse;
-import edu.uark.registerapp.controllers.BaseRestController;
 
 @RestController
 @RequestMapping(value = "/api")
