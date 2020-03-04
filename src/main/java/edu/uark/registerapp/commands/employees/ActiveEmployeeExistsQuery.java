@@ -1,8 +1,9 @@
 package edu.uark.registerapp.commands.employees;
 
 import edu.uark.registerapp.models.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class ActiveEmployeeExistsQuery {
