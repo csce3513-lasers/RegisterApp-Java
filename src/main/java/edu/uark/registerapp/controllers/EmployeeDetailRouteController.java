@@ -79,24 +79,29 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 
 		// TODO: Query the employee details using the request route parameter
 		else
-		{
-			employee=queryParameters[employeeId];
-			employeeQuery query=this.setEmployeeRecordId(employee).execute();
-		}
+		{/*
+			UUID employee=queryParameters[employeeId];
+			EmployeeQuery query=this.setEmployeeRecordId(employee).execute();
+		}*/
 		// TODO: Serve up the page
 		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
 	}
 
 	// Helper methods
-	private boolean activeUserExists() {
+	/*private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
-		if(ActiveEmployeeExistsQuery())
+
+		
+
+		
+
 		{
 			return true;
 		}
-		else
+		
 		{
 			return false;
 		}
-	}
+	}*/
+}
 }
