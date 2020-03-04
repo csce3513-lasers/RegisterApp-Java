@@ -1,4 +1,4 @@
-package models.api;
+package edu.uark.registerapp.models.api;
 
 import javax.validation.constraints.NotNull;
 
