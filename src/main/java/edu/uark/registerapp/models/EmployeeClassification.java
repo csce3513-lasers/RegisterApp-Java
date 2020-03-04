@@ -1,4 +1,4 @@
-package edu.uark.registerapp.models.enums;
+package edu.uark.registerapp.models;
 
 import java.util.HashMap;
 import java.util.Map;
