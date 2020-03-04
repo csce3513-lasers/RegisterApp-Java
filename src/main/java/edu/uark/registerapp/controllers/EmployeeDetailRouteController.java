@@ -26,7 +26,8 @@ import edu.uark.registerapp.models.entities.ActiveUserEntity;
 @Controller
 @RequestMapping(value = "/employeeDetail")
 public class EmployeeDetailRouteController extends BaseRouteController {
-	private static final ActiveUserEntity CurrentUser = null;
+
+	private static final Optional<ActiveUserEntity> CurrentUser = null;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView start(
@@ -38,7 +39,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-		if(super.isElevatedUser(CurrentUser))
+		if(super.isElevatedUser(CurrentUser.get()))
 		{
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(

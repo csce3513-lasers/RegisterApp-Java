@@ -35,7 +35,7 @@ public class EmployeeRestController extends BaseRestController {
 
 		try {
 			// TODO: Query if any active employees exist
-			this.EmployeeQuery.execute();
+			this.employeeQuery.execute();
 			
 
 			canCreateEmployeeResponse =
@@ -81,4 +81,7 @@ public class EmployeeRestController extends BaseRestController {
 		// TODO: Update the employee
 		return employee;
 	}
+
+	private EmployeeQuery employeeQuery;
 }
+
