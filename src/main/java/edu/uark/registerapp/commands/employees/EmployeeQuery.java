@@ -16,22 +16,22 @@ import edu.uark.registerapp.models.repositories.EmployeeRepository;
 public class EmployeeQuery implements ResultCommandInterface<Employee> {
 	@Override
 	public Employee execute() {
-		final Optional<EmployeeEntity> EmployeeEntity =
-			this.EmployeeRepository.findById(this.EmployeeRecordId);
-		if (EmployeeEntity.isPresent()) {
-			return new Employee(EmployeeEntity.get());
+		final Optional<EmployeeEntity> employeeEntity =
+			this.employeeRepository.findById(this.employeeRecordId);
+		if (employeeEntity.isPresent()) {
+			return new Employee(employeeEntity.get());
 		} else {
 			throw new NotFoundException("Employee ID  Not Found ");
 		}
 	}
 
 	// Properties
-	private UUID EmployeeRecordId;
-	public UUID EmployeeRecordId() {
-		return this.EmployeeRecordId;
+	private UUID employeeRecordId;
+	public UUID getEmployeeRecordId() {
+		return this.employeeRecordId;
 	}
-	public EmployeeQuery setEmployeeRecordId(final UUID EmployeeRecordId) {
-		this.EmployeeRecordId = EmployeeRecordId;
+	public EmployeeQuery setEmployeeRecordId(final UUID employeeRecordId) {
+		this.employeeRecordId = employeeRecordId;
 		return this;
 	}
 

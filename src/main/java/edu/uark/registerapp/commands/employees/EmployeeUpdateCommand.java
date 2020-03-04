@@ -22,14 +22,14 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 	public Employee execute() {
 		this.validateProperties();
 
-		final Optional<EmployeeEntity> EmployeeEntity =
-			this.EmployeeRepository.findById(this.EmployeeId);
-		if (!EmployeeEntity.isPresent()) { // No record with the associated record ID exists in the database.
+		final Optional<EmployeeEntity> employeeEntity =
+			this.employeeRepository.findById(this.employeeId);
+		if (!employeeEntity.isPresent()) { // No record with the associated record ID exists in the database.
 			throw new NotFoundException("Employee");
 		}
 
 		// Synchronize any incoming changes for UPDATE to the database.
-		this.apiEmployee = emoployeeEntity.get().synchronize(this.apiEmployee);
+		this.apiEmployee = employeeEntity.get().synchronize(this.apiEmployee);
 
 		// Write, via an UPDATE, any changes to the database.
 		this.employeeRepository.save(employeeEntity.get());
@@ -39,8 +39,8 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 
 	// Helper methods
 	private void validateProperties() {
-		if (StringUtils.isBlank(this.apiEmployee.getLookupCode())) {
-			throw new UnprocessableEntityException("lookupcode");
+		if (StringUtils.isBlank(this.apiEmployee.getId())) {
+			throw new UnprocessableEntityException("ID");
 		}
 	}
 	public void validateEmployee(){
@@ -56,7 +56,7 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 	}
 
 	// Properties
-	private UUID EmployeeId;
+	private UUID employeeId;
 	public UUID getEmployeeId() {
 		return this.employeeId;
 	}
@@ -75,5 +75,5 @@ public class EmployeeUpdateCommand implements ResultCommandInterface<Employee> {
 	}
 	
 	@Autowired
-	private EmployeeRepository EmployeeRepository;
+	private EmployeeRepository employeeRepository;
 }
