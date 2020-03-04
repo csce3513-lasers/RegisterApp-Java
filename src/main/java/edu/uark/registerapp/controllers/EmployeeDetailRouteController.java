@@ -58,7 +58,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		
 	}
 
-	@RequestMapping(value = "/{employeeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employeeDetail/{employeeId}", method = RequestMethod.GET)
 	public ModelAndView startWithEmployee(
 		@PathVariable final UUID employeeId,
 		@RequestParam final Map<String, String> queryParameters,
