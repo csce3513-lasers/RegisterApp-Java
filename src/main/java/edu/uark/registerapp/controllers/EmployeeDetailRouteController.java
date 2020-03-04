@@ -27,9 +27,17 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	public ModelAndView start(
 		@RequestParam final Map<String, String> queryParameters,
 		final HttpServletRequest request
-	) {
-
+	) 
+	{
+		final Optional<ActiveUserEntity> CurrentUser =
+			this.getCurrentUser(request);
+			
 		// TODO: Logic to determine if the user associated with the current session
+		if(CurrentUser.getElevated())
+		{
+			
+		}
+		
 		//  is able to create an employee
 		
 		
