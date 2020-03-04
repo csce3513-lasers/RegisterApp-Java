@@ -18,6 +18,7 @@ import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Employee;
+import edu.uark.registerapp.commands.employees.EmployeeQuery;
 
 @RestController
 @RequestMapping(value = "/api/employee")
