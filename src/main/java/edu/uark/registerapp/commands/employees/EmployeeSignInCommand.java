@@ -12,7 +12,6 @@ import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 public class EmployeeSignInCommand {
