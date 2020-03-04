@@ -51,11 +51,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		}
 		else
 		{
-<<<<<<< HEAD
+
 			return super.builldNoPermissionResponse();
-=======
+
 			
->>>>>>> 9ef047ec8538a00f87e92ef7eed5bd87af6f1ea4
+
 		}
 		
 		//  is able to create an employee
@@ -85,7 +85,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		else
 		{
 			UUID employee=queryParameters[employeeId];
-			employeeQuery query=this.setEmployeeRecordId(employee).execute();
+			EmployeeQuery query=this.setEmployeeRecordId(employee).execute();
 		}
 		// TODO: Serve up the page
 		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
@@ -94,11 +94,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	// Helper methods
 	private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
-<<<<<<< HEAD
+
 		if()
-=======
-		if(ActiveEmployeeExistsQuery())
->>>>>>> 9ef047ec8538a00f87e92ef7eed5bd87af6f1ea4
+
+		
+
 		{
 			return true;
 		}
