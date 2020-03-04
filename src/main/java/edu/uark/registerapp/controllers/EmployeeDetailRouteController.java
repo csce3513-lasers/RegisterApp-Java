@@ -36,7 +36,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 			this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
-		if(isElevatedUser(CurrentUser))
+		if(super.isElevatedUser(CurrentUser))
 		{
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(
@@ -47,15 +47,11 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		}
 		else if(CurrentUser==null)
 		{
-			return super.buildInvalidSessionResponse();
+			return buildInvalidSessionResponse();
 		}
 		else
 		{
-
-			return super.builldNoPermissionResponse();
-
-			
-
+			return buildNoPermissionResponse();
 		}
 		
 		//  is able to create an employee
@@ -78,14 +74,14 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		if (!activeUserEntity.isPresent()) {
 			return this.buildInvalidSessionResponse();
 		} else if (!this.isElevatedUser(activeUserEntity.get())) {
-			return this.super.buildNoPermissionsResponse();
+			return this.buildNoPermissionsResponse();
 		}
 
 		// TODO: Query the employee details using the request route parameter
 		else
 		{
-			UUID employee=queryParameters[employeeId];
-			EmployeeQuery query=this.setEmployeeRecordId(employee).execute();
+			employee=queryParameters[employeeId];
+			employeeQuery query=this.setEmployeeRecordId(employee).execute();
 		}
 		// TODO: Serve up the page
 		return new ModelAndView(ViewModelNames.EMPLOYEE_TYPES.getValue());
@@ -94,11 +90,7 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 	// Helper methods
 	private boolean activeUserExists() {
 		// TODO: Helper method to determine if any active users Exist
-
-		if()
-
-		
-
+		if(ActiveEmployeeExistsQuery())
 		{
 			return true;
 		}
