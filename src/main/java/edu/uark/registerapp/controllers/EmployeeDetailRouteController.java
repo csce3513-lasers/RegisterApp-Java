@@ -35,15 +35,12 @@ public class EmployeeDetailRouteController extends BaseRouteController {
 		final HttpServletRequest request
 	) 
 	{
-		final Optional <ActiveUserEntity> activeUserEntity =
-			this.getCurrentUser(request);
+		final Optional <ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
 			
 		// TODO: Logic to determine if the user associated with the current session
 
 
-		if(isElevatedUser(activeUserEntity))
-
-		{
+		if(isElevatedUser(activeUserEntity)){
 			return new ModelAndView(
 			REDIRECT_PREPEND.concat(
 				ViewNames.EmployeeDetail.getRoute().concat(

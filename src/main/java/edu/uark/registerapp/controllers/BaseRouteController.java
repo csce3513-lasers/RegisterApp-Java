@@ -74,9 +74,9 @@ public abstract class BaseRouteController extends BaseController {
 						QueryParameterMessages.SESSION_NOT_ACTIVE.getKeyAsString()))));
 	}
 
-	protected boolean isElevatedUser(final ActiveUserEntity activeUserEntity) {
+	protected boolean isElevatedUser(final Optional<ActiveUserEntity> activeUserEntity) {
 		return EmployeeClassification.isElevatedUser(
-			activeUserEntity.getClassification());
+			activeUserEntity.get().getClassification());
 	}
 
 	protected ModelAndView buildNoPermissionsResponse() {
