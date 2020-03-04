@@ -1,15 +1,17 @@
-package controllers;
+package edu.uark.registerapp.controllers;
 
-import models.api.EmployeeSignIn;
+import edu.uark.registerapp.commands.employees.ActiveEmployeeExistsQuery;
+import edu.uark.registerapp.commands.employees.EmployeeSignInCommand;
+import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
+import edu.uark.registerapp.models.api.EmployeeSignIn;
+
 import java.util.Map;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +24,14 @@ public class SignInRouteController {
     //controller implented here   
     @RequestMapping(method = RequestMethod.GET)  
     public ModelAndView signInGetRoute(@RequestParam Map<String, String> map) {
-        //if employee exists, serve this page
         ModelAndView modelAndView;
-        Boolean employeeExists = true; // placeholder
-        if(employeeExists) {
+        try {
+            //if employee exists, serve this page
+            ActiveEmployeeExistsQuery activeEmployeeExistsQuery = new ActiveEmployeeExistsQuery();
             modelAndView = new ModelAndView("signInView");
         }
-        else {
-            modelAndView = new ModelAndView("employeeDetailView");
+        catch(NotFoundException e) {
+            modelAndView = new ModelAndView("redirect:/employeeDetail");
         }
         return modelAndView;
     }
@@ -39,13 +41,13 @@ public class SignInRouteController {
         ModelAndView modelAndView;
         employeeSignIn.setEmployeeId(req.getParameter("empID"));
         employeeSignIn.setPassword(req.getParameter("passWord"));
-        //check if valid
-        if(employeeSignIn.getEmployeeId().equals("123") && employeeSignIn.getPassword().equals("password")) {
-            HttpSession session = req.getSession(); // creates a new session if session doesn't exist
-            String sessionId = session.getId();
-            modelAndView = new ModelAndView("mainMenuView");
+        HttpSession session = req.getSession();
+        String sessionId = session.getId();
+        try {
+            EmployeeSignInCommand employeeSignInCommand = new EmployeeSignInCommand(employeeSignIn, sessionId);
+            modelAndView = new ModelAndView("mainMenu"); 
         }
-        else {
+        catch(UnprocessableEntityException e){ //could not catch another NotFoundException
             modelAndView = new ModelAndView("signInView");
             modelAndView.addObject("errorMessage", "Sign-in unsuccessful. Please try again.");
         }
