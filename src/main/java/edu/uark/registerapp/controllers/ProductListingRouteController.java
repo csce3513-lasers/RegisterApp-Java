@@ -48,5 +48,7 @@ public class ProductListingRouteController {
     // Properties
     @Autowired
     ActiveUserRepository activeUserRepository;
-	private ProductQuery productQuery;
+    private ProductQuery productQuery;
 }
+    
+
