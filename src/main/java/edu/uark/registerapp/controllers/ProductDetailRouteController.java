@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.uark.registerapp.commands.products.ProductQuery;
+import static edu.uark.registerapp.controllers.BaseRouteController.REDIRECT_PREPEND;
 import edu.uark.registerapp.controllers.enums.ViewModelNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.Product;
@@ -21,7 +22,8 @@ import edu.uark.registerapp.models.entities.ActiveUserEntity;
 import edu.uark.registerapp.models.repositories.ActiveUserRepository;
 
 @Controller
-@RequestMapping(value = "/productDetail") //correct routename?
+@RequestMapping(value = "/productDetail"
+) //correct routename?
 
 public class ProductDetailRouteController {
     
@@ -42,11 +44,11 @@ public class ProductDetailRouteController {
                 modelAndView.addObject(ViewModelNames.PRODUCT.getValue(), (new Product()).setLookupCode(StringUtils.EMPTY).setCount(0));
             }
             else {
-                modelAndView = new ModelAndView("redirect:/productListing.html"); 
+                modelAndView = new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
             }
         }
         else {
-            modelAndView = new ModelAndView("redirect:/productListing.html"); 
+            modelAndView = new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
         }
         return modelAndView;
     }
@@ -73,11 +75,11 @@ public class ProductDetailRouteController {
                 }
             }
             else {
-                modelAndView = new ModelAndView("redirect:/productListing.html"); 
+                modelAndView = new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
             }
         }
         else {
-            modelAndView = new ModelAndView("redirect:/productListing.html");
+            modelAndView = new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute()));
         }
         return modelAndView;
     }

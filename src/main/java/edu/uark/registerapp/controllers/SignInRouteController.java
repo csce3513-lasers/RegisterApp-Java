@@ -29,10 +29,10 @@ public class SignInRouteController extends BaseRouteController {
         try {
             //if employee exists, serve this page
             ActiveEmployeeExistsQuery activeEmployeeExistsQuery = new ActiveEmployeeExistsQuery();
-            modelAndView = new ModelAndView("signInView");
+            modelAndView = new ModelAndView(ViewNames.EmployeeDetail.getViewName());
         }
         catch(NotFoundException e) {
-            modelAndView = new ModelAndView("redirect:/employeeDetail");
+            modelAndView = new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.EmployeeDetail.getRoute()));
         }
         return modelAndView;
     }
@@ -48,7 +48,7 @@ public class SignInRouteController extends BaseRouteController {
             return new ModelAndView(REDIRECT_PREPEND.concat(ViewNames.MAIN_MENU.getRoute()));
         }
         catch(UnprocessableEntityException e){ //could not catch another NotFoundException
-            ModelAndView modelAndView = new ModelAndView("signInView");
+            ModelAndView modelAndView = new ModelAndView(ViewNames.SIGN_IN.getViewName());
             modelAndView.addObject("errorMessage", "Sign-in unsuccessful. Please try again.");
 			return modelAndView;
         }

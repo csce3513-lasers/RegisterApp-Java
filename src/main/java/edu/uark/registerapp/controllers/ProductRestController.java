@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.uark.registerapp.commands.products.ProductCreateCommand;
 import edu.uark.registerapp.commands.products.ProductDeleteCommand;
 import edu.uark.registerapp.commands.products.ProductUpdateCommand;
+import static edu.uark.registerapp.controllers.BaseRouteController.REDIRECT_PREPEND;
+import edu.uark.registerapp.controllers.enums.ViewNames;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
@@ -38,13 +40,13 @@ public class ProductRestController {
             }
             else {
                 ApiResponse apiResponse = new ApiResponse();
-                apiResponse.setRedirectUrl("/productListing.html"); 
+                apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
                 return apiResponse;
             }
         }
         else {
             ApiResponse apiResponse = new ApiResponse();
-            apiResponse.setRedirectUrl("/productListing.html"); 
+            apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
             return apiResponse;
         }
     }
@@ -63,13 +65,13 @@ public class ProductRestController {
             }
             else {
                 ApiResponse apiResponse = new ApiResponse();
-                apiResponse.setRedirectUrl("/productListing.html"); 
+                apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
                 return apiResponse;
             }
         }
         else {
             ApiResponse apiResponse = new ApiResponse();
-            apiResponse.setRedirectUrl("/productListing.html"); 
+            apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
             return apiResponse;
         }
     }
@@ -89,13 +91,13 @@ public class ProductRestController {
             }
             else {
                 ApiResponse apiResponse = new ApiResponse();
-                apiResponse.setRedirectUrl("/productListing.html"); 
+                apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
                 return apiResponse;
             }
         }
         else {
             ApiResponse apiResponse = new ApiResponse();
-            apiResponse.setRedirectUrl("/productListing.html"); 
+            apiResponse.setRedirectUrl(REDIRECT_PREPEND.concat(ViewNames.PRODUCT_LISTING.getRoute())); 
             return apiResponse;
         }
     }
