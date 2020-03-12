@@ -21,23 +21,19 @@
 			<h4 id="errorMessage" class="error-message" th:text="${errorMessage}"></h4>
 		</div>
 
-		<!-- TODO: Add the various action button elements -->
-		<div class="displayMenuWrapper">
+		<div class="mainMenuActionsWrapper">
 			<br />
-			
-			<button id="startTransactionButton" type="button" class="action">Start Transaction</button>
-			<br />
-			<br />
-			<button id="viewButton" type="button" class="action">View Products</button>
-			<br />
-			<br />
-			<button id="createButton" type="button" class="action">Create Employee</button>
-			<br />
-			<br />
-			<button id="salesButton" type="button" class="action">Sales Report</button>
-			<br />
-			<br />
-			<button id="cashierButton" type="button" class="action">Cashier Report</button>
+			<button id="startTransactionButton" type="button" class="action" title="Functionality Not Available">Start Transaction</button>
+			<br /><br />
+			<button id="viewProductsButton" type="button" class="action">View Products</button>
+			<div th:class="not ${isElevatedUser} ? hidden : ''">
+				<br />
+				<button id="createEmployeeButton" type="button" class="action">Create Employee</button>
+				<br /><br />
+				<button id="productSalesReportButton" type="button" class="action" title="Functionality Not Available">Product Sales</button>
+				<br /><br />
+				<button id="cashierSalesReportButton" type="button" class="action" title="Functionality Not Available">Cashier Sales</button>
+			</div>
 		</div>
 	</div>
 
@@ -54,19 +50,11 @@
 					location.reload();
 				}
 			}
-
-			window.addEventListener('DOMContentLoaded', (event) => {
-				document.getElementById("startTransactionButton").addEventListener("click", window.location.href='underConstruction.html');
-				document.getElementById("viewButton").addEventListener("click", window.location.href='productListing.html');
-				document.getElementById("createButton").addEventListener("click", window.location.href='employeeDetail.html');
-				document.getElementById("salesButton").addEventListener("click", window.location.href='underConstruction.html');
-				document.getElementById("cashierButton").addEventListener("click", window.location.href='underConstruction');
-			});
 		</script>
 	</div>
 
 	<div class="footer">
-		<img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" onclick="window.location.href='/api/signOut';" />
+		<img id="signOutImage" src="/images/Sign-Out.png" alt="Sign Out" class="footer" />
 	</div>
 		
 </body>

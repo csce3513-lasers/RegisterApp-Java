@@ -1,29 +1,28 @@
 package edu.uark.registerapp.models.api;
 
-import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.StringUtils;
 
 public class EmployeeSignIn {
+	private String employeeId;
+	public String getEmployeeId() {
+		return this.employeeId;
+	}
+	public EmployeeSignIn setEmployeeId(final String employeeId) {
+		this.employeeId = employeeId;
+		return this;
+	}
 
-    @NotNull
-    private String employeeId;
-
-    @NotNull
-    private String password;
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
+	private String password;
+	public String getPassword() {
+		return this.password;
+	}
+	public EmployeeSignIn setPassword(final String password) {
+		this.password = password;
+		return this;
+	}
+	
+	public EmployeeSignIn() {
+		this.password = StringUtils.EMPTY;
+		this.employeeId = StringUtils.EMPTY;
+	}
 }

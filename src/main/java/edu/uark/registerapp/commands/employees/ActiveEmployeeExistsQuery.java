@@ -1,18 +1,21 @@
 package edu.uark.registerapp.commands.employees;
 
-import edu.uark.registerapp.models.repositories.EmployeeRepository;
-import edu.uark.registerapp.commands.exceptions.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import edu.uark.registerapp.commands.VoidCommandInterface;
+import edu.uark.registerapp.commands.exceptions.NotFoundException;
+import edu.uark.registerapp.models.repositories.EmployeeRepository;
 
-public class ActiveEmployeeExistsQuery {
-    public ActiveEmployeeExistsQuery() {
-        if (!employeeRepository.existsByIsActive(true)) {
-            throw new NotFoundException("No active employee exists.");
-        }
-    }
-    
-    @Autowired
-    EmployeeRepository employeeRepository;
+@Service
+public class ActiveEmployeeExistsQuery implements VoidCommandInterface {
+	@Override
+	public void execute() {
+		if (!this.employeeRepository.existsByIsActive(true)) {
+			throw new NotFoundException("Employee");
+		}
+	}
+
+	@Autowired
+	private EmployeeRepository employeeRepository;
 }

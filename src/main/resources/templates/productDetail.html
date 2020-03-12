@@ -34,32 +34,28 @@
 					<tr>
 						<td class="label">Lookup Code:</td>
 						<td>
-							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" th:attr="disabled=${disabledField} ?: true" class="update" />
+							<input id="productLookupCode" type="text" th:value="${!product.isEmpty} ? ${product.lookupCode} : ''" class="update" th:disabled="not ${isElevatedUser}" />
 						</td>
 					</tr>
 					<tr>
 						<td class="label">Count:</td>
 						<td>
-							<input id="productCount" type="number" th:value="${!product.isEmpty} ? ${product.count} : ''" th:attr="disabled=${disabledField} ?: true" class="update" />
+							<input id="productCount" type="number" th:value="${!product.isEmpty} ? ${product.count} : ''" class="update" th:disabled="not ${isElevatedUser}" />
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div class="productActionsWrapper">
+		<div class="productActionsWrapper" th:class="(not ${isElevatedUser} OR not ${#strings.isEmpty(errorMessage)}) ? hidden : ''">
 			<br />
-			<div id="deleteActionContainer" th:class="${product.isEmpty} ? hidden : ''" th:if="${elevatedUser} ?: false">
+			<div id="deleteActionContainer" th:class="${product.isEmpty} ? hidden : ''">
 				<button id="deleteButton" type="button" class="action">Delete</button>
 				<br />
 				<br />
 			</div>
-			<button id="saveButton" type="button" class="action" th:if="${elevatedUser} ?: false">Save</button>
+			<button id="saveButton" type="button" class="action">Save</button>
 		</div>
-            
-                <div class="footer">
-                    <img id="signOutImage" src="input-24px.svg" alt="Sign Out" class="footer" onclick="window.location.href='/api/signOut';" />
-                </div>
 
 		<div id="productSavedAlertModal" class="modal animate-opacity-show">
 			<div class="modal-content">
@@ -71,6 +67,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="footer">
+		<img id="signOutImage" src="/images/Sign-Out.png" alt="Sign Out" class="footer" />
 	</div>
 		
 </body>

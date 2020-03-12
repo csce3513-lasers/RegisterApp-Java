@@ -16,9 +16,9 @@ import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 import edu.uark.registerapp.controllers.enums.QueryParameterMessages;
 import edu.uark.registerapp.controllers.enums.QueryParameterNames;
 import edu.uark.registerapp.controllers.enums.ViewNames;
-import edu.uark.registerapp.models.EmployeeClassification;
 import edu.uark.registerapp.models.api.ApiResponse;
 import edu.uark.registerapp.models.entities.ActiveUserEntity;
+import edu.uark.registerapp.models.enums.EmployeeClassification;
 
 public class BaseRestController extends BaseController {
 	protected ApiResponse redirectSessionNotActive(

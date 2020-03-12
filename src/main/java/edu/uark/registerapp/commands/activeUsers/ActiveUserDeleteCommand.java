@@ -1,43 +1,38 @@
 package edu.uark.registerapp.commands.activeUsers;
 
-import edu.uark.registerapp.commands.VoidCommandInterface;
-import edu.uark.registerapp.models.entities.ActiveUserEntity;
-import edu.uark.registerapp.models.repositories.ActiveUserRepository;
-import edu.uark.registerapp.commands.exceptions.NotFoundException;
-
 import java.util.Optional;
-import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.uark.registerapp.commands.VoidCommandInterface;
+import edu.uark.registerapp.models.entities.ActiveUserEntity;
+import edu.uark.registerapp.models.repositories.ActiveUserRepository;
+
 @Service
 public class ActiveUserDeleteCommand implements VoidCommandInterface {
-	
-    String sessionKey;
-	
-    @Transactional
-    @Override
-    public void execute() {
-	final Optional<ActiveUserEntity> activeUserEntity = activeUserRepository.findBySessionKey(sessionKey);
-        if (activeUserEntity.isPresent()) {
-            if(StringUtils.isBlank(activeUserEntity.get().getName())) { //Validate the incoming Employee request object, first name should not be blank, last name should not be blank?
-                this.activeUserRepository.delete(activeUserEntity.get());
-            }
-            else {
-                throw new NotFoundException("Active user");
-            }
-	}
-        else {
-            throw new NotFoundException("Active user");
-        }
-    }
+	@Transactional
+	@Override
+	public void execute() {
+		final Optional<ActiveUserEntity> activeUserEntity =
+			this.activeUserRepository.findBySessionKey(this.sessionKey);
 
-    public ActiveUserDeleteCommand setSessionKey(String sessionKey) {
-	this.sessionKey = sessionKey;
-	return this;
-    }
-	
-    @Autowired
-    ActiveUserRepository activeUserRepository;
+		if (activeUserEntity.isPresent()) {
+			this.activeUserRepository.delete(activeUserEntity.get());
+		}
+	}
+
+	// Properties
+	private String sessionKey;
+	public String getSessionKey() {
+		return this.sessionKey;
+	}
+	public ActiveUserDeleteCommand setSessionKey(final String sessionKey) {
+		this.sessionKey = sessionKey;
+		return this;
+	}
+
+	@Autowired
+	private ActiveUserRepository activeUserRepository;
 }
