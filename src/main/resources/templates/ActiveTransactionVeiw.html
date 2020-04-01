@@ -1,4 +1,377 @@
 <!DOCTYPE html>
 <html>
-<title> current transaction</title>
+<head>
+    <title> current transaction</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        button {
+            cursor: pointer;
+        }
+        #searchContainer,
+        #cartContainer {
+            height: 100vh;
+            padding: 10px;
+        }
+        #searchContainer {
+            width: 75%;
+        }
+        #cartContainer {
+            width: 25%;
+            border-left: 1px solid gainsboro;
+        }
+        #searchBar {
+            display: flex;
+            width: 100%;
+        }
+        #searchInput {
+            width: 100%;
+        }
+        .searchResult {
+            display: flex;
+            margin-top: 5px;
+            padding: 5px;
+            background-color: gainsboro;
+        }
+        .searchResult:last-child {
+            margin-bottom: 5px;
+        }
+        .searchResult > span {
+            flex-grow: 1;
+            align-self: center;
+        }
+        .searchResult > .controls {
+            flex-basis: 30%;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+        }	
+        .searchResult > .controls > input {
+            width: 50px;
+        }
+        #cartItems {
+            height: 90%;
+            overflow-y: auto;
+            border-bottom: 1px solid gainsboro;
+        }
+        .cartItem {
+            background-color: gainsboro;
+            padding: 10px;
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+        }
+        .cartItem:last-child {
+            margin-bottom: 5px;
+        }
+        .cartItem:hover {
+            cursor: pointer;
+        }
+        .cartItem > .cartProductName {
+            font-weight: bold;
+        }
+        .cartItem > .cartProductPrice {
+            font-weight: bold;
+            font-style: italic;
+        }
+        #cartFooter {
+            padding-top: 5px;
+        }
+        #cartTotal {
+            font-weight: bold;
+            color: red;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content > iframe {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Search container -->
+    <div id="searchContainer">
+        <div id="searchBar">
+            <input id="searchInput">
+            <button id="searchButton">Search</button>
+        </div>
+        <div id="searchResults">
+        </div>
+    </div>
+
+    <!-- Cart container -->
+    <div id="cartContainer">
+        <div id="cartItems">
+        </div>
+        <div id="cartFooter">
+            <span id="cartTotal">Total: $0</span>
+            <button id="checkoutButton">Check out</button>
+            <button id="clearCartButton">Clear cart</button>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe src="" width="640" height="480"></iframe>
+        </div>
+    </div>
+
+    <!-- Cart Detail Modal -->
+    <div id="cartDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1 id="cartDetailModalProductName"></h1>
+            <input id="cartDetailModalInput" type=number min="0" oninput="validity.valid||(value='');" data-product-id="" data-product-price="">
+            <button id="cartDetailModalSaveButton">Save</button>
+            <button id="cartDetailModalDeleteButton">Delete</button>
+        </div>
+    </div>
+
+    <!-- Check out Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>
+            Send cart content to server, maybe compare to what server has, if everything is fine and no errors send to checkout overview page? Else error.
+            </p>
+        </div>
+    </div>
+
+    <!-- jQuery UI Dialog -->
+    <div id="existsDialog" title="This product already exists in the cart">
+        <p>What would you like to do?</p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    
+    <script>
+        // this will serve as example JSON search results
+        var searchResult = [{
+            productID: "0001",
+            productName: "Apple",
+            productPrice: 0.80
+        },
+        {
+            productID: "0002",
+            productName: "Pear",
+            productPrice: 0.90
+        },
+        {
+            productID: "0003",
+            productName: "Tomato",
+            productPrice: 0.65
+        }];
+
+
+        $("#searchButton").click(function(){
+            let searchID = $(this).siblings("input").val();
+            /*
+            let search = $.ajax({
+                url: "script.php",
+                type: "POST",
+                data: searchID,
+                dataType: "JSON"
+            });
+
+            search.done(function(searchResult) {
+                */
+                $("#searchResults").html("");
+                if (searchResult.length !== 0) {
+                    $.each(searchResult, function(index, item) {
+                        $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productName + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton">Add to cart</button><button class="detailButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
+                    });
+                }
+                else { // if returned JSON array is empty
+                    $("#searchResults").html("No matches were found, please try again...");
+                }
+                /*
+            });
+
+            search.fail(function(jqXHR, textStatus) {
+                alert("Search failed, please try again...");
+            });
+            */
+        });
+
+        $(document).on("click", ".cartButton", function(){
+            let clickedElement = $(this);
+            let quantity = $(this).siblings("input").val();
+            if(quantity > 0) {
+                let productID = $(this).parent().parent().data("product-id");
+                let productPrice = $(this).parent().parent().data("product-price");
+                let exists = false;
+                $(".cartItem").each(function() {
+                    if($(this).data("product-id") === productID) {
+                        $("#existsDialog").data("existingElement", $(this)).data("clickedElement", clickedElement).dialog("open");
+                            exists = true;
+                        }
+                    });
+
+                    if(!exists) {
+                        let productName = $(this).parent().siblings("span").html();
+                        let totalPrice = (productPrice * quantity).toFixed(2);
+                        $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                        updateCartTotal();
+                    }
+            }
+            else {
+                alert("Amount has to be greater than 0");
+            }
+        });
+
+        $("#existsDialog").dialog({
+            autoOpen: false,
+            resizable: false,
+            height: "auto",
+            width: "auto",
+            modal: true,
+            buttons: {
+                "Create new entry": function() {
+                    let quantity = $(this).data("clickedElement").siblings("input").val();
+                    let productID = $(this).data("clickedElement").parent().parent().data("product-id");
+                    let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
+                    let productName = $(this).data("clickedElement").parent().siblings("span").html();
+                    let totalPrice = (productPrice * quantity).toFixed(2);
+                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                    updateCartTotal();
+                    $(this).dialog("close");
+                },	
+                "Add to existing entry": function() {
+                    let quantity = $(this).data("clickedElement").siblings("input").val();
+                    let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
+                    let oldQuantity = $(this).data("existingElement").find(".cartProductQuantity").html().slice(0, -1);
+                    let newQuantity = parseInt(oldQuantity) + parseInt(quantity);
+                    let newPrice = productPrice * newQuantity;
+                    $(this).data("existingElement").find(".cartProductQuantity").html(newQuantity + "x");
+                    $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
+                    updateCartTotal();
+                    $(this).dialog('close');
+                },
+                "Replace existing entry":  function() {
+                    let quantity = $(this).data("clickedElement").siblings("input").val();
+                    let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
+                    let newPrice = productPrice * quantity;
+                    $(this).data("existingElement").find(".cartProductQuantity").html(quantity + "x");
+                    $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
+                    updateCartTotal();
+                    $(this).dialog('close');
+                },
+                "Cancel":  function() {$(this).dialog('close');}
+            }
+        });
+
+        $(document).on("click", ".detailButton", function(){
+            $("#productDetailModal").find("iframe").attr("src", "https://www.bing.com/search?q=" + $(this).parent().parent().data("product-id"));
+            $("#productDetailModal").css("display", "block");
+        });
+
+
+        $(document).on("click", ".cartItem", function(){
+            $("#cartDetailModalProductName").html($(this).find(".cartProductName").html());
+            $("#cartDetailModalInput").val($(this).find(".cartProductQuantity").html().slice(0, -1));
+            $("#cartDetailModalInput").data("product-id", $(this).data("product-id"));
+            $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
+            $("#cartDetailModal").css("display", "block");
+        });
+
+        $("#checkoutButton").click(function(){
+            $("#checkoutModal").css("display", "block");
+        });
+
+        $("#clearCartButton").click(function(){
+            $("#cartItems").html("");
+            updateCartTotal();
+        });
+
+        $("#cartDetailModalSaveButton").click(function(){
+            let newQuantity = $("#cartDetailModalInput").val();
+            if(newQuantity > 0) {
+                let productID = $("#cartDetailModalInput").data("product-id");
+                let productPrice = $("#cartDetailModalInput").data("product-price");
+                let newPrice = productPrice * newQuantity;
+                $(".cartItem").each(function(item) {
+                    if($(this).data("product-id") === productID) {
+                        $(this).find(".cartProductQuantity").html(newQuantity + "x");
+                        $(this).find(".cartProductPrice").html("$" + newPrice.toFixed(2));
+                    }
+                });
+                updateCartTotal();
+                $("#cartDetailModal").css("display", "none");
+            }
+        });
+
+        $("#cartDetailModalDeleteButton").click(function(){
+            let response = confirm("Are you sure you wish to delete this product?");
+            if (response) {
+                let productID = $("#cartDetailModalInput").data("product-id");
+                $(".cartItem").each(function() {
+                    if($(this).data("product-id") === productID) {
+                        $(this).remove();
+                    }
+                }); 
+                updateCartTotal();
+                $("#cartDetailModal").css("display", "none");
+            }
+        });
+
+        function updateCartTotal(){
+            let price = 0;
+            $(".cartProductPrice").each(function() {
+                price += parseFloat($(this).text().slice(1));
+            });
+            $("#cartTotal").html("Total: $" + price.toFixed(2));
+        }
+
+        // MODAL CONTROL
+        $(".close").click(function(){
+            $(this).parent().parent().css("display", "none");
+        });
+    </script>
+</body>
 </html>
