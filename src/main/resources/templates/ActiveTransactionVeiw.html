@@ -149,6 +149,7 @@
         </div>
         <div id="cartFooter">
             <span id="cartTotal">Total: $0</span>
+            <button id="returnButton">Return to Main Menu</button>
             <button id="checkoutButton">Check out</button>
             <button id="clearCartButton">Clear cart</button>
         </div>
@@ -172,6 +173,15 @@
             <button id="cartDetailModalDeleteButton">Delete</button>
         </div>
     </div>
+    <!-- Return Modal -->
+    <div id="returnModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+             <p>
+            Return to main menu and delete the cart? or should we just keep the cart in case they want to come back?
+             </p>
+        </div>
+     </div>
 
     <!-- Check out Modal -->
     <div id="checkoutModal" class="modal">
@@ -318,6 +328,10 @@
             $("#cartDetailModalInput").data("product-id", $(this).data("product-id"));
             $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
             $("#cartDetailModal").css("display", "block");
+        });
+        
+        $("#returnButton").click(function(){
+	        $("#returnModal").css("display","block");
         });
 
         $("#checkoutButton").click(function(){
