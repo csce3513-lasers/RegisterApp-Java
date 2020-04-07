@@ -1,15 +1,18 @@
 package edu.uark.registerapp.controllers;
 
-import edu.uark.registerapp.models.api.CartItem;
-import edu.uark.registerapp.models.api.SearchResult;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import edu.uark.registerapp.models.api.CartItem;
+import edu.uark.registerapp.models.api.SearchResult;
 
 @RestController
 @RequestMapping(value = "/checkout")
@@ -17,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CheckoutRestController {
    
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public @ResponseBody List<SearchResult> search(HttpServletRequest request) throws Exception {
+    public @ResponseBody List<SearchResult> search(final HttpServletRequest request) throws Exception {
         
-//SUBSTITUTE FOR DATABASE
+        //SUBSTITUTE FOR DATABASE
         ArrayList<SearchResult> products = new ArrayList<SearchResult>();
         SearchResult apple = new SearchResult();
         apple.setProductID("0001");
@@ -35,12 +38,11 @@ public class CheckoutRestController {
         tomato.setProductID("0003");
         tomato.setProductName("Tomato");
         tomato.setProductPrice(0.80);
-        products.add(tomato);
-                       
+        products.add(tomato);        
+
         //ACTUAL CODE
         String productID = request.getParameter("pid");
-        
-        
+                   
         List<SearchResult> searchResults = new ArrayList<SearchResult>(); //CHANGE TO WHAT SEARCH CLASS RETURNS
         
         //SEARCH SUBSTITUTE
@@ -63,7 +65,7 @@ public class CheckoutRestController {
    
    
     @RequestMapping(value = "/submitCart", method = RequestMethod.POST)
-    public @ResponseBody List<CartItem> checkout(@RequestBody List<CartItem> cart) throws Exception {
+    public @ResponseBody List<CartItem> checkout(@RequestBody final List<CartItem> cart) throws Exception {
         
         //TEST CODE PRINTS OUT CART
         for(CartItem item : cart) {
