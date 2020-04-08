@@ -36,7 +36,7 @@ public class ActiveTransactionRouteController extends BaseRouteController {
 			return this.buildInvalidSessionResponse();
 		} else if (!this.isElevatedUser(activeUserEntity.get())) {
 			return this.buildNoPermissionsResponse(
-				ViewNames.PRODUCT_LISTING.getRoute());
+				ViewNames.ACTIVE_TRANSACTION.getRoute());
 		}
 
 		final ModelAndView modelAndView =
