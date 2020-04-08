@@ -47,6 +47,12 @@ public class ProductEntity {
 		return this.count;
 	}
 
+	private int price;
+
+	public int getPrice(){
+		return this.price;
+	}
+
 	public ProductEntity setCount(final int count) {
 		this.count = count;
 		return this;
