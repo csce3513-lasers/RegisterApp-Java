@@ -68,6 +68,21 @@ public class Product extends ApiResponse {
 		this.setCreatedOn(LocalDateTime.now());
 	}
 
+	private double price;
+
+	public void setPrice(float inPrice)
+	{
+		if(inPrice>0)
+			{this.price=inPrice; }
+		else
+			{ this.price= 1.00 ;}
+	}
+
+	public double getPrice()
+	{
+		return this.price;
+	}
+
 	public Product(final ProductEntity productEntity) {
 		super(false);
 

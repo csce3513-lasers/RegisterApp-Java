@@ -203,6 +203,23 @@
     <script>
         var searchResults = [];
         var cart = [];
+        var productId =[];
+        var productName=[];
+        var price=[];
+        var quantity=[];
+
+        function populateLocalInventory(productObject)
+        {
+        //take a jason object to fill in fields for client side functions
+            productName.push( productObject.name);
+            productId.push(productObject.lookupCode);
+            quantity.push(productObject.count);
+            price.push(productObject.price);
+
+
+
+        }
+
         $("#searchInput").keypress(function(key) {
             if (key.keyCode === 13) {
                 $("#searchButton").trigger("click");
