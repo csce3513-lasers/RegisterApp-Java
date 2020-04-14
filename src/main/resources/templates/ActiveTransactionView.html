@@ -251,7 +251,7 @@
                 $("#searchResults").html("");
                 if (searchResult.length !== 0) {
                     $.each(searchResult, function(index, item) {
-                        $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productName + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton fancyButton">Add to cart</button><button class="detailButton fancyButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
+                        $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productID + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton fancyButton">Add to cart</button><button class="detailButton fancyButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
                     });
                 }
                 else { // if returned JSON array is empty
@@ -283,8 +283,8 @@
                     if(!exists) {
                         let productName = $(this).parent().siblings("span").html();
                         let totalPrice = (productPrice * quantity).toFixed(2);
-                        $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                        cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
+                        $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productID + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                        cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
 						updateCartTotal();
                     }
             }
@@ -304,19 +304,15 @@
                     let quantity = $(this).data("clickedElement").siblings("input").val();
                     let productID = $(this).data("clickedElement").parent().parent().data("product-id");
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
-                    let productName = $(this).data("clickedElement").parent().siblings("span").html();
                     let totalPrice = (productPrice * quantity).toFixed(2);
-                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                    
-					cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
-					
-					updateCartTotal();
-                    
-					$(this).dialog("close");
+                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productID + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                    cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
+                    updateCartTotal();
+                    $(this).dialog("close");
                 },	
                 "Add to existing entry": function() {
                     let quantity = $(this).data("clickedElement").siblings("input").val();
-					let productID = $(this).data("clickedElement").parent().parent().data("product-id");
+                    let productID = $(this).data("clickedElement").parent().parent().data("product-id");
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
                     let oldQuantity = $(this).data("existingElement").find(".cartProductQuantity").html().slice(0, -1);
                     let newQuantity = parseInt(oldQuantity) + parseInt(quantity);
@@ -324,39 +320,33 @@
                     $(this).data("existingElement").find(".cartProductQuantity").html(newQuantity + "x");
                     $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
                     let cartIndex = null;
-					$.each(cart, function(index, item) {
-						if(item.productID === productID) {
-							cartIndex = index;
-						}
-					});
-					
-					cart[cartIndex].productQuantity = newQuantity;
-					cart[cartIndex].productPrice = newPrice;
-                    
-					updateCartTotal();
-                    
-					$(this).dialog('close');
+                    $.each(cart, function(index, item) {
+                        if(item.productID === productID) {
+                            cartIndex = index;
+                        }
+                    });		
+                    cart[cartIndex].productQuantity = newQuantity;
+                    cart[cartIndex].productPrice = newPrice;
+                    updateCartTotal();
+                    $(this).dialog('close');
                 },
                 "Replace existing entry": function() {
                     let quantity = $(this).data("clickedElement").siblings("input").val();
-					let productID = $(this).data("clickedElement").parent().parent().data("product-id");
+                    let productID = $(this).data("clickedElement").parent().parent().data("product-id");
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
                     let newPrice = productPrice * quantity;
                     $(this).data("existingElement").find(".cartProductQuantity").html(quantity + "x");
                     $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
                     let cartIndex = null;
-					$.each(cart, function(index, item) {
-						if(item.productID === productID) {
-							cartIndex = index;
-						}
-					});
-					
-					cart[cartIndex].productQuantity = quantity;
-					cart[cartIndex].productPrice = newPrice;
-                    
-					updateCartTotal();
-                    
-					$(this).dialog('close');
+                    $.each(cart, function(index, item) {
+                        if(item.productID === productID) {
+                            cartIndex = index;
+                        }
+                    });		
+                    cart[cartIndex].productQuantity = quantity;
+                    cart[cartIndex].productPrice = newPrice; 
+                    updateCartTotal();
+                    $(this).dialog('close');
                 },
                 "Cancel": function () {
                     $(this).dialog('close');
