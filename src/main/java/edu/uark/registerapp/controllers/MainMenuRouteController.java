@@ -23,7 +23,7 @@ public class MainMenuRouteController extends BaseRouteController {
 		@RequestParam final Map<String, String> queryParameters,
 		final HttpServletRequest request
 	) {
-		for (Product product : this.productByPartialLookupCodeQuery.setPartialLookupCode("up").execute()
+		for (Product product : this.productByPartialLookupCodeQuery.setPartialLookupCode("up").execute())
 		{
 			System.out.println("Queried product: " + product.getLookupCode());
 		}
