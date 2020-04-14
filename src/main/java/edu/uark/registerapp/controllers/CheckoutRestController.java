@@ -41,7 +41,7 @@ public class CheckoutRestController {
         products.add(tomato);        
 
         //ACTUAL CODE
-        String productID = request.getParameter("pid");
+        String productID = request.getParameter("data");
                    
         List<SearchResult> searchResults = new ArrayList<SearchResult>(); //CHANGE TO WHAT SEARCH CLASS RETURNS
         
