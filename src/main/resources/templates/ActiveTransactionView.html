@@ -355,7 +355,7 @@
         });
 
             $(document).on("click", ".detailButton", function() {
-                $("#productDetailModal").find("iframe").attr("src", "https://www.bing.com/search?q=" + $(this).parent().parent().data("product-id"));
+                $("#productDetailModal").find("iframe").attr("src", "/productDetail/" + $(this).parent().parent().data("product-id"));
                 $("#productDetailModal").css("display", "block");
             });
 
