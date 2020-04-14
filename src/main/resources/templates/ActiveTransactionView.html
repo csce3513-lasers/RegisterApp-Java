@@ -180,6 +180,7 @@
             <button id="checkoutButton" class="fancyButton confirm">Check out</button>
             <button id="clearCartButton" class="fancyButton clear">Clear cart</button>
             <button id="clearCartButton" class="fancyButton cancel">Cancel transaction</button>
+            <button id="returnButton"  class="fancyButton return">Sign out</button>
         </div>
     </div>
 
@@ -212,6 +213,14 @@
             
         </div>
     </div>
+     <!-- Sign out Modal -->
+    <div id="returnModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Sign out and return to sign in page</p>
+        </div>
+      </div>
+      
 
     <!-- jQuery UI Dialog -->
     <div id="existsDialog" title="This product already exists in the cart">
@@ -393,6 +402,9 @@
                 });
 
             });
+            $("#returnButton").click(function(){
+	        $("#returnModal").css("display", "block");
+            })
 
             $("#clearCartButton").click(function() {
                 $("#cartItems").html("");
