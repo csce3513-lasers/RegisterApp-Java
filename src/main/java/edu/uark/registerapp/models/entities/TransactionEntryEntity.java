@@ -92,7 +92,7 @@ public class TransactionEntryEntity {
 	public TransactionEntryEntity(
 		final UUID transactionId,
 		final UUID productId,
-		final double quantity,
+			final double quantity,
 		final long price
 	) {
 
