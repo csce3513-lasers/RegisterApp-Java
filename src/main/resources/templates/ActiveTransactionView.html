@@ -8,6 +8,10 @@
             padding: 0;
             margin: 0;
             display: flex;
+            font-size: 18px;
+        }
+        input {
+            font-size: 18px;
         }
         button {
             cursor: pointer;
@@ -22,7 +26,7 @@
         }
         #cartContainer {
             width: 25%;
-            border-left: 1px solid gainsboro;
+            border-left: 1px solid #bdc3c7;
         }
         #searchBar {
             display: flex;
@@ -35,7 +39,7 @@
             display: flex;
             margin-top: 5px;
             padding: 5px;
-            background-color: gainsboro;
+            background-color: #bdc3c7;
         }
         .searchResult:last-child {
             margin-bottom: 5px;
@@ -56,10 +60,10 @@
         #cartItems {
             height: 90%;
             overflow-y: auto;
-            border-bottom: 1px solid gainsboro;
+            border-bottom: 1px solid #bdc3c7;
         }
         .cartItem {
-            background-color: gainsboro;
+            background-color: #bdc3c7;
             padding: 10px;
             margin-top: 5px;
             display: flex;
@@ -85,12 +89,36 @@
         }
         #cartFooter {
             padding-top: 5px;
+            display: flex;
+            align-items: center;
         }
         #cartTotal {
             font-weight: bold;
             color: red;
         }
-
+        
+        .fancyButton {
+            background-color: #2980b9;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+        .fancyButton.confirm {
+            background-color: #2ecc71;
+        }
+        .fancyButton.clear {
+            background-color: #f39c12;
+        }
+        .fancyButton.cancel {
+            background-color: #c0392b;
+        }
+        
         .modal {
             display: none;
             position: fixed;
@@ -137,7 +165,7 @@
     <div id="searchContainer">
         <div id="searchBar">
             <input id="searchInput">
-            <button id="searchButton">Search</button>
+            <button id="searchButton" class="fancyButton">Search</button>
         </div>
         <div id="searchResults">
         </div>
@@ -148,10 +176,10 @@
         <div id="cartItems">
         </div>
         <div id="cartFooter">
-            <span id="cartTotal">Total: $0</span>
-            <button id="returnButton">Return to Main Menu</button>
-            <button id="checkoutButton">Check out</button>
-            <button id="clearCartButton">Clear cart</button>
+            <span id="cartTotal">Total: $0.00</span>
+            <button id="checkoutButton" class="fancyButton confirm">Check out</button>
+            <button id="clearCartButton" class="fancyButton clear">Clear cart</button>
+            <button id="clearCartButton" class="fancyButton cancel">Cancel transaction</button>
         </div>
     </div>
 
@@ -168,28 +196,20 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h1 id="cartDetailModalProductName"></h1>
-            <input id="cartDetailModalInput" type=number min="0" oninput="validity.valid||(value='');" data-product-id="" data-product-price="">
-            <button id="cartDetailModalSaveButton">Save</button>
-            <button id="cartDetailModalDeleteButton">Delete</button>
+            <input id="cartDetailModalInput" type=number min="0" oninput="validity.valid||(value='');" data-cart-index="" data-product-price="">
+            <button id="cartDetailModalSaveButton" class="fancyButton">Save</button>
+            <button id="cartDetailModalDeleteButton" class="fancyButton">Delete</button>
         </div>
     </div>
-    <!-- Return Modal -->
-    <div id="returnModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-             <p>
-            Return to main menu and delete the cart? or should we just keep the cart in case they want to come back?
-             </p>
-        </div>
-     </div>
 
     <!-- Check out Modal -->
     <div id="checkoutModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>
-            Send cart content to server, maybe compare to what server has, if everything is fine and no errors send to checkout overview page? Else error.
-            </p>
+            <p>Cart was successfully sent and handled by server.</p>
+            <p>Show success message and the order? Maybe a print button? Redirect back to the main screen when this closes?</p>
+            <p>Redirect to a separate page if successful?</p>
+            
         </div>
     </div>
 
@@ -203,23 +223,6 @@
     <script>
         var searchResults = [];
         var cart = [];
-        var productId =[];
-        var productName=[];
-        var price=[];
-        var quantity=[];
-
-        function populateLocalInventory(productObject)
-        {
-        //take a jason object to fill in fields for client side functions
-            productName.push( productObject.name);
-            productId.push(productObject.lookupCode);
-            quantity.push(productObject.count);
-            price.push(productObject.price);
-
-
-
-        }
-
         $("#searchInput").keypress(function(key) {
             if (key.keyCode === 13) {
                 $("#searchButton").trigger("click");
@@ -239,7 +242,7 @@
                 $("#searchResults").html("");
                 if (searchResult.length !== 0) {
                     $.each(searchResult, function(index, item) {
-                        $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productName + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton">Add to cart</button><button class="detailButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
+                        $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productName + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton fancyButton">Add to cart</button><button class="detailButton fancyButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
                     });
                 }
                 else { // if returned JSON array is empty
@@ -250,7 +253,7 @@
             search.fail(function(jqXHR, textStatus) {
                 alert("Search failed, please try again...");
             });
-           
+            
         });
 
         $(document).on("click", ".cartButton", function() {
@@ -266,15 +269,15 @@
                         $("#existsDialog").data("existingElement", $(this)).data("clickedElement", clickedElement).dialog("open");
                             exists = true;
                         }
-                });
+                    });
 
-                if(!exists) {
-                    let productName = $(this).parent().siblings("span").html();
-                    let totalPrice = (productPrice * quantity).toFixed(2);
-                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                    cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
-                    updateCartTotal();
-                }
+                    if(!exists) {
+                        let productName = $(this).parent().siblings("span").html();
+                        let totalPrice = (productPrice * quantity).toFixed(2);
+                        $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                        cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
+						updateCartTotal();
+                    }
             }
             else {
                 alert("Amount has to be greater than 0");
@@ -295,43 +298,56 @@
                     let productName = $(this).data("clickedElement").parent().siblings("span").html();
                     let totalPrice = (productPrice * quantity).toFixed(2);
                     $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                    cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
-                    updateCartTotal();
-                    $(this).dialog("close");
-                },
+                    
+					cart.push({productID: productID, productName: productName, productPrice: productPrice,  productQuantity: quantity});
+					
+					updateCartTotal();
+                    
+					$(this).dialog("close");
+                },	
                 "Add to existing entry": function() {
                     let quantity = $(this).data("clickedElement").siblings("input").val();
-                    let productID = $(this).data("clickedElement").parent().parent().data("product-id");
+					let productID = $(this).data("clickedElement").parent().parent().data("product-id");
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
                     let oldQuantity = $(this).data("existingElement").find(".cartProductQuantity").html().slice(0, -1);
                     let newQuantity = parseInt(oldQuantity) + parseInt(quantity);
                     let newPrice = productPrice * newQuantity;
                     $(this).data("existingElement").find(".cartProductQuantity").html(newQuantity + "x");
                     $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
-                    $.each(cart, function(index, item) {
-                    if(item.productID === productID) {
-                    item.quantity = newQuantity;
-                    item.price = newPrice;
-                    }
-                    });
-                    updateCartTotal();
-                    $(this).dialog('close');
+                    let cartIndex = null;
+					$.each(cart, function(index, item) {
+						if(item.productID === productID) {
+							cartIndex = index;
+						}
+					});
+					
+					cart[cartIndex].productQuantity = newQuantity;
+					cart[cartIndex].productPrice = newPrice;
+                    
+					updateCartTotal();
+                    
+					$(this).dialog('close');
                 },
                 "Replace existing entry": function() {
                     let quantity = $(this).data("clickedElement").siblings("input").val();
-                    let productID = $(this).data("clickedElement").parent().parent().data("product-id");
+					let productID = $(this).data("clickedElement").parent().parent().data("product-id");
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
                     let newPrice = productPrice * quantity;
                     $(this).data("existingElement").find(".cartProductQuantity").html(quantity + "x");
                     $(this).data("existingElement").find(".cartProductPrice").html("$" + newPrice.toFixed(2));
-                    $.each(cart, function(index, item) {
-                    if(item.productID === productID) {
-                    item.quantity = newQuantity;
-                    item.price = newPrice;
-                    }
-                    });
-                    updateCartTotal();
-                    $(this).dialog('close');
+                    let cartIndex = null;
+					$.each(cart, function(index, item) {
+						if(item.productID === productID) {
+							cartIndex = index;
+						}
+					});
+					
+					cart[cartIndex].productQuantity = quantity;
+					cart[cartIndex].productPrice = newPrice;
+                    
+					updateCartTotal();
+                    
+					$(this).dialog('close');
                 },
                 "Cancel": function () {
                     $(this).dialog('close');
@@ -339,102 +355,90 @@
             }
         });
 
-        $(document).on("click", ".detailButton", function() {
-            $("#productDetailModal").find("iframe").attr("src", "https://www.bing.com/search?q=" + $(this).parent().parent().data("product-id"));
-            $("#productDetailModal").css("display", "block");
-        });
-
-
-        $(document).on("click", ".cartItem", function() {
-            $("#cartDetailModalProductName").html($(this).find(".cartProductName").html());
-            $("#cartDetailModalInput").val($(this).find(".cartProductQuantity").html().slice(0, -1));
-            $("#cartDetailModalInput").data("product-id", $(this).data("product-id"));
-            $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
-            $("#cartDetailModal").css("display", "block");
-        });
-
-        $("#checkoutButton").click(function() {
-
-            //cart = [{productID: "0001", productQuantity: 3}, {productID: "0003", productQuantity: 5}];
-
-            let checkout = $.ajax({
-                headers: { //important for letting spring know it will receive JSON
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: window.location.pathname + "/submitCart",
-                type: "POST",
-                data: JSON.stringify(cart),
-                dataType: "JSON"
+            $(document).on("click", ".detailButton", function() {
+                $("#productDetailModal").find("iframe").attr("src", "https://www.bing.com/search?q=" + $(this).parent().parent().data("product-id"));
+                $("#productDetailModal").css("display", "block");
             });
 
-            checkout.done(function (checkoutResult) {
-                $("#checkoutModal").css("display", "block");
+
+            $(document).on("click", ".cartItem", function() {
+                $("#cartDetailModalProductName").html($(this).find(".cartProductName").html());
+                $("#cartDetailModalInput").val($(this).find(".cartProductQuantity").html().slice(0, -1));
+                $("#cartDetailModalInput").data("cart-index", $(this).index());
+                $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
+                $("#cartDetailModal").css("display", "block");
             });
 
-            checkout.fail(function (jqXHR, textStatus) {
-                alert("Checkout failed, please try again...");
-            });
+            $("#checkoutButton").click(function() {
 
-        });
+                //cart = [{productID: "0001", productQuantity: 3}, {productID: "0003", productQuantity: 5}];
 
-        $("#clearCartButton").click(function() {
-            $("#cartItems").html("");
-            updateCartTotal();
-        });
-
-        $("#cartDetailModalSaveButton").click(function() {
-            let newQuantity = $("#cartDetailModalInput").val();
-            if (newQuantity > 0) {
-                let productID = $("#cartDetailModalInput").data("product-id");
-                let productPrice = $("#cartDetailModalInput").data("product-price");
-                let newPrice = productPrice * newQuantity;
-                $(".cartItem").each(function (item) {
-                    if ($(this).data("product-id") === productID) {
-                        $(this).find(".cartProductQuantity").html(newQuantity + "x");
-                        $(this).find(".cartProductPrice").html("$" + newPrice.toFixed(2));
-                    }
+                let checkout = $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    url: window.location.pathname + "/submitCart",
+                    type: "POST",
+                    data: JSON.stringify(cart),
+                    dataType: "JSON"
                 });
-                $.each(cart, function(index, item) {
-                if(item.productID === productID) {
-                item.quantity = newQuantity;
-                item.price = newPrice;
+
+                checkout.done(function (checkoutResult) {
+                    $("#checkoutModal").css("display", "block");
+                });
+
+                checkout.fail(function (jqXHR, textStatus) {
+                    alert("Checkout failed, please try again...");
+                });
+
+            });
+
+            $("#clearCartButton").click(function() {
+                $("#cartItems").html("");
+                cart = [];
+                updateCartTotal();
+            });
+
+            $("#cartDetailModalSaveButton").click(function() {
+                let newQuantity = $("#cartDetailModalInput").val();
+                if (newQuantity > 0) {
+                    let cartIndex = $("#cartDetailModalInput").data("cart-index");
+                    let productPrice = $("#cartDetailModalInput").data("product-price");
+                    let newPrice = productPrice * newQuantity;
+                    $($(".cartItem")[cartIndex]).find(".cartProductQuantity").html(newQuantity + "x");
+                    $($(".cartItem")[cartIndex]).find(".cartProductPrice").html("$" + newPrice.toFixed(2));
+                    console.log(cart[cartIndex])
+                    cart[cartIndex].productQuantity = newQuantity;
+                    cart[cartIndex].productPrice = newPrice;
+                    updateCartTotal();
+                    $("#cartDetailModal").css("display", "none");
                 }
-                });
-                updateCartTotal();
-                $("#cartDetailModal").css("display", "none");
-            }
-        });
-
-        $("#cartDetailModalDeleteButton").click(function () {
-            let response = confirm("Are you sure you wish to delete this product?");
-            if (response) {
-                let productID = $("#cartDetailModalInput").data("product-id");
-                $(".cartItem").each(function () {
-                    if ($(this).data("product-id") === productID) {
-                        $(this).remove();
-                    }
-                });
-                cart = $.grep(cart, function(item) {
-                return item.productID !== productID;
-                });
-                updateCartTotal();
-                $("#cartDetailModal").css("display", "none");
-            }
-        });
-
-        function updateCartTotal() {
-            let price = 0;
-            $(".cartProductPrice").each(function () {
-                price += parseFloat($(this).text().slice(1));
             });
-            $("#cartTotal").html("Total: $" + price.toFixed(2));
-        }
 
-        // MODAL CONTROL
-        $(".close").click(function () {
-            $(this).parent().parent().css("display", "none");
-        });
+            $("#cartDetailModalDeleteButton").click(function () {
+                let response = confirm("Are you sure you wish to delete this product?");
+                if (response) {
+                    let cartIndex = $("#cartDetailModalInput").data("cart-index");
+                    $($(".cartItem")[cartIndex]).remove();
+                    cart.splice(cartIndex,1);
+                    updateCartTotal();
+                    $("#cartDetailModal").css("display", "none");
+                }
+            });
+
+            function updateCartTotal() {
+                let price = 0;
+                $(".cartProductPrice").each(function () {
+                    price += parseFloat($(this).text().slice(1));
+                });
+                $("#cartTotal").html("Total: $" + price.toFixed(2));
+            }
+
+            // MODAL CONTROL
+            $(".close").click(function () {
+                $(this).parent().parent().css("display", "none");
+            });
     </script>
 </body>
 </html>
