@@ -63,9 +63,9 @@ public class CheckoutRestController extends BaseRestController {
         singleResult.setProductPrice(singleProduct.getPrice());
         products.add(singleResult);
 
-		String partial = request.getParameter("up");
+		//String partial = request.getParameter("up");
 		 //CONVERTING FROM PARTIAL PRODUCT LOOKUPCODE TO SEARCHRESULT
-        this.productByPartialLookupCodeQuery.setPartialLookupCode(partial);
+        this.productByPartialLookupCodeQuery.setPartialLookupCode("up");
         Product allProducts = this.productByPartialLookupCodeQuery.execute();
         SearchResult allResults = new SearchResult();
         allResults.setProductID(allProducts.getPartialLookupCode());
