@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.uark.registerapp.commands.products.ProductByLookupCodeQuery;
+import edu.uark.registerapp.commands.products.ProductByPartialLookupCodeQuery;
 import edu.uark.registerapp.commands.products.ProductCreateCommand;
 import edu.uark.registerapp.commands.products.ProductQuery;
 import edu.uark.registerapp.commands.products.ProductsQuery;
