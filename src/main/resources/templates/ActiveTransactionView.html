@@ -354,93 +354,88 @@
             }
         });
 
-            $(document).on("click", ".detailButton", function() {
-                $("#productDetailModal").find("iframe").attr("src", "/productDetail/" + $(this).parent().parent().data("product-id"));
-                $("#productDetailModal").css("display", "block");
+        $(document).on("click", ".detailButton", function() {
+            $("#productDetailModal").find("iframe").attr("src", "/productDetail/" + $(this).parent().parent().data("product-id"));
+            $("#productDetailModal").css("display", "block");
+        });
+
+        $(document).on("click", ".cartItem", function() {
+            $("#cartDetailModalProductName").html($(this).find(".cartProductName").html());
+            $("#cartDetailModalInput").val($(this).find(".cartProductQuantity").html().slice(0, -1));
+            $("#cartDetailModalInput").data("cart-index", $(this).index());
+            $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
+            $("#cartDetailModal").css("display", "block");
+        });
+
+        $("#checkoutButton").click(function() {
+            let checkout = $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: window.location.pathname + "/submitCart",
+                type: "POST",
+                data: JSON.stringify(cart),
+                dataType: "JSON"
             });
 
-
-            $(document).on("click", ".cartItem", function() {
-                $("#cartDetailModalProductName").html($(this).find(".cartProductName").html());
-                $("#cartDetailModalInput").val($(this).find(".cartProductQuantity").html().slice(0, -1));
-                $("#cartDetailModalInput").data("cart-index", $(this).index());
-                $("#cartDetailModalInput").data("product-price", $(this).data("product-price"));
-                $("#cartDetailModal").css("display", "block");
+            checkout.done(function (checkoutResult) {
+                $("#checkoutModal").css("display", "block");
             });
 
-            $("#checkoutButton").click(function() {
-
-                //cart = [{productID: "0001", productQuantity: 3}, {productID: "0003", productQuantity: 5}];
-
-                let checkout = $.ajax({
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    url: window.location.pathname + "/submitCart",
-                    type: "POST",
-                    data: JSON.stringify(cart),
-                    dataType: "JSON"
-                });
-
-                checkout.done(function (checkoutResult) {
-                    $("#checkoutModal").css("display", "block");
-                });
-
-                checkout.fail(function (jqXHR, textStatus) {
-                    alert("Checkout failed, please try again...");
-                });
-
+            checkout.fail(function (jqXHR, textStatus) {
+                alert("Checkout failed, please try again...");
             });
-            $("#returnButton").click(function(){
-                window.location.href='signIn.html';
-            })
 
-            $("#clearCartButton").click(function() {
-                $("#cartItems").html("");
-                cart = [];
+        });
+        $("#returnButton").click(function(){
+            window.location.href='signIn.html';
+        })
+
+        $("#clearCartButton").click(function() {
+            $("#cartItems").html("");
+            cart = [];
+            updateCartTotal();
+        });
+
+        $("#cartDetailModalSaveButton").click(function() {
+            let newQuantity = $("#cartDetailModalInput").val();
+            if (newQuantity > 0) {
+                let cartIndex = $("#cartDetailModalInput").data("cart-index");
+                let productPrice = $("#cartDetailModalInput").data("product-price");
+                let newPrice = productPrice * newQuantity;
+                $($(".cartItem")[cartIndex]).find(".cartProductQuantity").html(newQuantity + "x");
+                $($(".cartItem")[cartIndex]).find(".cartProductPrice").html("$" + newPrice.toFixed(2));
+                cart[cartIndex].productQuantity = newQuantity;
+                cart[cartIndex].productPrice = newPrice;
                 updateCartTotal();
-            });
-
-            $("#cartDetailModalSaveButton").click(function() {
-                let newQuantity = $("#cartDetailModalInput").val();
-                if (newQuantity > 0) {
-                    let cartIndex = $("#cartDetailModalInput").data("cart-index");
-                    let productPrice = $("#cartDetailModalInput").data("product-price");
-                    let newPrice = productPrice * newQuantity;
-                    $($(".cartItem")[cartIndex]).find(".cartProductQuantity").html(newQuantity + "x");
-                    $($(".cartItem")[cartIndex]).find(".cartProductPrice").html("$" + newPrice.toFixed(2));
-                    console.log(cart[cartIndex])
-                    cart[cartIndex].productQuantity = newQuantity;
-                    cart[cartIndex].productPrice = newPrice;
-                    updateCartTotal();
-                    $("#cartDetailModal").css("display", "none");
-                }
-            });
-
-            $("#cartDetailModalDeleteButton").click(function () {
-                let response = confirm("Are you sure you wish to delete this product?");
-                if (response) {
-                    let cartIndex = $("#cartDetailModalInput").data("cart-index");
-                    $($(".cartItem")[cartIndex]).remove();
-                    cart.splice(cartIndex,1);
-                    updateCartTotal();
-                    $("#cartDetailModal").css("display", "none");
-                }
-            });
-
-            function updateCartTotal() {
-                let price = 0;
-                $(".cartProductPrice").each(function () {
-                    price += parseFloat($(this).text().slice(1));
-                });
-                $("#cartTotal").html("Total: $" + price.toFixed(2));
+                $("#cartDetailModal").css("display", "none");
             }
+        });
 
-            // MODAL CONTROL
-            $(".close").click(function () {
-                $(this).parent().parent().css("display", "none");
+        $("#cartDetailModalDeleteButton").click(function () {
+            let response = confirm("Are you sure you wish to delete this product?");
+            if (response) {
+                let cartIndex = $("#cartDetailModalInput").data("cart-index");
+                $($(".cartItem")[cartIndex]).remove();
+                cart.splice(cartIndex,1);
+                updateCartTotal();
+                $("#cartDetailModal").css("display", "none");
+            }
+        });
+
+        function updateCartTotal() {
+            let price = 0;
+            $(".cartProductPrice").each(function () {
+                price += parseFloat($(this).text().slice(1));
             });
+            $("#cartTotal").html("Total: $" + price.toFixed(2));
+        }
+
+        // MODAL CONTROL
+        $(".close").click(function () {
+            $(this).parent().parent().css("display", "none");
+        });
     </script>
 </body>
 </html>
