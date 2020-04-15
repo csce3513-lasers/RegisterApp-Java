@@ -70,12 +70,12 @@ public class CheckoutRestController extends BaseRestController {
             //make arraylist empty
             products.clear();
 			//CONVERTING FROM PARTIAL PRODUCT LOOKUPCODE TO SEARCHRESULT
-            this.productByPartialLookupCodeQuery.setPartialLookupCode("up");
-            Product allProducts = this.productByPartialLookupCodeQuery.execute();
+           /* productByPartialLookupCodeQuery.setPartialLookupCode("up");
+            Product allProducts = productByPartialLookupCodeQuery.execute();
             SearchResult allResults = new SearchResult();
             allResults.setProductID(allProducts.getPartialLookupCode());
             allResults.setProductPrice(allProducts.getPrice());
-            products.add(allResults);
+            products.add(allResults);*/
         }        
         /*
         //SEARCH SUBSTITUTE (WILL ADD PARTIAL SEARCH LATER)
