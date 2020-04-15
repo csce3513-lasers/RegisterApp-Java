@@ -51,11 +51,11 @@ public class CheckoutRestController extends BaseRestController {
         */
 
         //ACTUAL CODE
-        String productID = request.getParameter("data");
+        String productLookupCode = request.getParameter("data");
         //List<SearchResult> searchResults = new ArrayList<SearchResult>(); //CHANGE TO WHAT SEARCH CLASS RETURNS
 
         //CONVERTING FROM PRODUCT TO SEARCHRESULT
-        this.productByLookupCodeQuery.setLookupCode(productID);
+        this.productByLookupCodeQuery.setLookupCode(productLookupCode);
         Product singleProduct = this.productByLookupCodeQuery.execute();
         SearchResult singleResult = new SearchResult();
         singleResult.setProductID(singleProduct.getLookupCode());
