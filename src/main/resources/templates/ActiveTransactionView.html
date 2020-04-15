@@ -280,13 +280,13 @@
                         }
                     });
 
-                    if(!exists) {
-                        let productName = $(this).parent().siblings("span").html();
-                        let totalPrice = (productPrice * quantity).toFixed(2);
-                        $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productID + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                        cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
-						updateCartTotal();
-                    }
+                if(!exists) {
+                    let productName = $(this).parent().siblings("span").html();
+                    let totalPrice = (productPrice * quantity).toFixed(2);
+                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productID + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                    cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
+                    updateCartTotal();
+                }
             }
             else {
                 alert("Amount has to be greater than 0");
@@ -388,9 +388,10 @@
             });
 
         });
+        
         $("#returnButton").click(function(){
             window.location.href='signIn.html';
-        })
+        });
 
         $("#clearCartButton").click(function() {
             $("#cartItems").html("");
