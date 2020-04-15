@@ -9,7 +9,7 @@ import edu.uark.registerapp.commands.ResultCommandInterface;
 //import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import edu.uark.registerapp.commands.exceptions.UnprocessableEntityException;
 import edu.uark.registerapp.models.api.Product;
-//import edu.uark.registerapp.models.entities.ProductEntity;
+import edu.uark.registerapp.models.entities.ProductEntity;
 import edu.uark.registerapp.models.repositories.ProductRepository;
 
 @Service
