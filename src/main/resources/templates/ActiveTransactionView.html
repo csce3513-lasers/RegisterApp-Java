@@ -208,8 +208,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Cart was successfully sent and handled by server.</p>
-            <p>Show success message and the order? Maybe a print button? Redirect back to the main screen when this closes?</p>
-            <p>Redirect to a separate page if successful?</p>
+      
             
         </div>
     </div>
@@ -387,10 +386,12 @@
                 alert("Checkout failed, please try again...");
             });
 
+            window.location = "mainMenu.html";
+
         });
         
         $("#returnButton").click(function(){
-            window.location.href='signIn.html';
+            window.location ='signIn.html';
         });
 
         $("#clearCartButton").click(function() {
