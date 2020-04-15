@@ -247,6 +247,7 @@
 
             search.done(function(searchResult) {
                 searchResults = searchResult;
+                console.log(searchResults);
                 $("#searchResults").html("");
                 if (searchResult.length !== 0) {
                     $.each(searchResult, function(index, item) {
@@ -265,7 +266,6 @@
         });
 
         $(document).on("click", ".cartButton", function() {
-            console.log(searchResults);
             let clickedElement = $(this);
             let quantity = $(this).siblings("input").val();
             if(quantity > 0) {
