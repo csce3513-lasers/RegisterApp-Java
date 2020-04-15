@@ -238,7 +238,7 @@
             }
         });
         $("#searchButton").click(function() {
-            let searchID = "pid=" + $(this).siblings("input").val();
+            let searchID = "data=" + $(this).siblings("input").val();
             let search = $.ajax({
                 url: window.location.pathname + "/search",
                 type: "POST",
