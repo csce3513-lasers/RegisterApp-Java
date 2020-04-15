@@ -28,6 +28,15 @@ public class Product extends ApiResponse {
 		this.lookupCode = lookupCode;
 		return this;
 	}
+	
+	public String getPartialLookupCode() {
+		return this.lookupCode;
+	}
+
+	public Product setPartialLookupCode(final String lookupCode) {
+		this.lookupCode = "up";
+		return this;
+	}
 
 	private int count;
 
