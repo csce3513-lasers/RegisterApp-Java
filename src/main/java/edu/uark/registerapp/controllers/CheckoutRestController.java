@@ -1,5 +1,6 @@
 package edu.uark.registerapp.controllers;
 
+import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,22 +57,28 @@ public class CheckoutRestController extends BaseRestController {
         //List<SearchResult> searchResults = new ArrayList<SearchResult>(); //CHANGE TO WHAT SEARCH CLASS RETURNS
 
         //CONVERTING FROM PRODUCT TO SEARCHRESULT
-        this.productByLookupCodeQuery.setLookupCode(productID);
-        Product singleProduct = this.productByLookupCodeQuery.execute();
-        SearchResult singleResult = new SearchResult();
-        singleResult.setProductID(singleProduct.getLookupCode());
-        singleResult.setProductPrice(singleProduct.getPrice());
-        products.add(singleResult);
+        try {
+            this.productByLookupCodeQuery.setLookupCode(productID);
+            Product singleProduct = this.productByLookupCodeQuery.execute();
+            SearchResult singleResult = new SearchResult();
+            singleResult.setProductID(singleProduct.getLookupCode());
+            singleResult.setProductPrice(singleProduct.getPrice());
+            products.add(singleResult);
+
 
 		//String partial = request.getParameter("up");
 		 //CONVERTING FROM PARTIAL PRODUCT LOOKUPCODE TO SEARCHRESULT
-        this.productByPartialLookupCodeQuery.setPartialLookupCode("up");
-        Product allProducts = this.productByPartialLookupCodeQuery.execute();
-        SearchResult allResults = new SearchResult();
-        allResults.setProductID(allProducts.getPartialLookupCode());
-        allResults.setProductPrice(allProducts.getPrice());
-        products.add(allResults);
-        
+            this.productByPartialLookupCodeQuery.setPartialLookupCode("up");
+            Product allProducts = this.productByPartialLookupCodeQuery.execute();
+            SearchResult allResults = new SearchResult();
+            allResults.setProductID(allProducts.getPartialLookupCode());
+            allResults.setProductPrice(allProducts.getPrice());
+            products.add(allResults);
+        }
+        catch(final NotFoundException e) {
+            //make arraylist empty
+            products.clear();
+        }        
         /*
         //SEARCH SUBSTITUTE (WILL ADD PARTIAL SEARCH LATER)
         if(!productID.isEmpty()) {
