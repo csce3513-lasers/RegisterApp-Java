@@ -179,7 +179,7 @@
             <span id="cartTotal">Total: $0.00</span>
             <button id="checkoutButton" class="fancyButton confirm">Check out</button>
             <button id="clearCartButton" class="fancyButton clear">Clear cart</button>
-            <button id="clearCartButton" class="fancyButton cancel">Cancel transaction</button>
+            <button id="cancelButton" class="fancyButton cancel">Cancel transaction</button>
             <button id="returnButton"  class="fancyButton return">Sign out</button>
         </div>
     </div>
@@ -391,7 +391,7 @@
         });
         
         $("#returnButton").click(function(){
-            window.location ='/signIn';
+            window.location ="/signIn";
         });
 
         $("#clearCartButton").click(function() {
