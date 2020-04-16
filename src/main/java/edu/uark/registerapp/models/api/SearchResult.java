@@ -11,7 +11,7 @@ public class SearchResult {
     public UUID getProductID() {
         return productID;
     }
-    public String getproductLookUpCode() {
+    public String getProductLookUpCode() {
         return productLookUpCode;
     }
     public double getProductPrice() {
@@ -20,7 +20,7 @@ public class SearchResult {
     public void setProductID(UUID id) {
         this.productID = id;
     }
-    public void setproductLookUpCode(String string) {
+    public void setProductLookUpCode(String string) {
         this.productLookUpCode = string;
     }
     public void setProductPrice(double productPrice) {
