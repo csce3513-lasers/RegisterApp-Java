@@ -249,7 +249,7 @@
                 searchResults = searchResult;
                 console.log(searchResults);
                 $("#searchResults").html("");
-                if (searchResult.length !== 0) {
+                if (searchResult.length !== 0 && searchResult !== null && typeof searchResult !== "undefined") {
                     $.each(searchResult, function(index, item) {
                         $("#searchResults").append('<div class="searchResult" data-product-id="' + item.productID + '" data-product-price="' + item.productPrice + '"><span>' + item.productID + '</span><div class="controls"><input type="number" min="0" oninput="validity.valid||(value=\'\');"><button class="cartButton fancyButton">Add to cart</button><button class="detailButton fancyButton">View detail</button></div></div>'); // min="1" oninput="validity.valid||(value=\'\');" makes it that no value lower than 0 can be put in, if lowest value of 1 is desired change min="0" to min="1"
                     });
