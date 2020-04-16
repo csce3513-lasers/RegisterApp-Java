@@ -61,7 +61,8 @@ public class CheckoutRestController extends BaseRestController {
             this.productByLookupCodeQuery.setLookupCode(productID);
             Product singleProduct = this.productByLookupCodeQuery.execute();
             SearchResult singleResult = new SearchResult();
-            singleResult.setProductID(singleProduct.getLookupCode());
+            singleResult.setProductID(singleProduct.getId());
+            singleResult.setProductLookUpCode(singleProduct.getLookupCode());
             singleResult.setProductPrice(singleProduct.getPrice());
             products.add(singleResult);
 
