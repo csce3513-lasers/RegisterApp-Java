@@ -22,6 +22,8 @@ import edu.uark.registerapp.commands.transactions.TransactionCreateCommand;
 import edu.uark.registerapp.models.api.CartItem;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.SearchResult;
+import java.util.Arrays;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/checkout")
@@ -68,8 +70,21 @@ public class CheckoutRestController extends BaseRestController {
 
         }
         catch(final NotFoundException e) {
-            //make arraylist empty
-            products.clear();
+            this.productByPartialLookupCodeQuery.setPartialLookupCode(productID);
+            
+            //CONVERT THE RETURNED ARRAY TO AN ARRAYLIST FOR EASIER USE
+            ArrayList<Product> allProducts = new ArrayList<Product>(Arrays.asList(this.productByPartialLookupCodeQuery.execute()));
+            
+            allProducts.forEach(singleProduct->{
+                //FROM HERE
+                SearchResult singleResult = new SearchResult();
+                singleResult.setProductID(singleProduct.getId());
+                singleResult.setProductLookUpCode(singleProduct.getLookupCode());
+                singleResult.setProductPrice(singleProduct.getPrice());
+                products.add(singleResult);
+                //TO HERE COULD BE REPLACED WITH, BUT NOT TESTED
+                //products.add(convertProductToSearchResult(singleProduct)); //METHOD COMMENTED OUT BELOW
+            });
 			//CONVERTING FROM PARTIAL PRODUCT LOOKUPCODE TO SEARCHRESULT
            /* productByPartialLookupCodeQuery.setPartialLookupCode("up");
             Product allProducts = productByPartialLookupCodeQuery.execute();
@@ -77,7 +92,10 @@ public class CheckoutRestController extends BaseRestController {
             allResults.setProductID(allProducts.getPartialLookupCode());
             allResults.setProductPrice(allProducts.getPrice());
             products.add(allResults);*/
-        }        
+        }
+        finally {
+            return products;
+        }      
         /*
         //SEARCH SUBSTITUTE (WILL ADD PARTIAL SEARCH LATER)
         if(!productID.isEmpty()) {
@@ -91,14 +109,12 @@ public class CheckoutRestController extends BaseRestController {
             }
         }
         */
-        //ACTUAL CODE
-        return products;
     }
    
    
    
     @RequestMapping(value = "/submitCart", method = RequestMethod.POST)
-    public @ResponseBody List<CartItem> checkout(@RequestBody final List<CartItem> cart) throws Exception {
+    public @ResponseBody UUID checkout(@RequestBody final List<CartItem> cart) throws Exception {
         
         //TEST CODE PRINTS OUT CART
         for(CartItem item : cart) {
@@ -107,8 +123,22 @@ public class CheckoutRestController extends BaseRestController {
         
         //WHAT GETS RETURNED
         List<CartItem> searchResults = new ArrayList<CartItem>();
-        return searchResults;
+                //TRY TO CREATE ORDER
+        UUID orderID = UUID.randomUUID(); //RANDOM UUID FOR TESTING PURPOSES
+        
+        //WHAT GETS RETURNED
+        return orderID;
     }
+    
+     /*
+    private SearchResult convertProductToSearchResult(Product singleProduct) {
+        SearchResult singleResult = new SearchResult();
+        singleResult.setProductID(singleProduct.getId());
+        singleResult.setProductLookUpCode(singleProduct.getLookupCode());
+        singleResult.setProductPrice(singleProduct.getPrice());
+        return singleResult;
+    }
+    */
        
     @Autowired
     private ProductCreateCommand productCreateCommand;
