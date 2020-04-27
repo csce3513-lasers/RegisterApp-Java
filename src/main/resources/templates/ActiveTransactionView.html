@@ -96,7 +96,11 @@
             font-weight: bold;
             color: red;
         }
-        
+        #mainMenuButton {
+            display: block;
+            margin-left: auto;
+            margin-top: 7px;
+        }
         .fancyButton {
             background-color: #2980b9;
             border: none;
@@ -206,10 +210,8 @@
     <!-- Check out Modal -->
     <div id="checkoutModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Cart was successfully sent and handled by server.</p>
-      
-            
+            <iframe src="" width="640" height="480"></iframe>
+            <button id="mainMenuButton" class="fancyButton">Main Menu</button>
         </div>
     </div>
      <!-- Sign out Modal -->
@@ -305,7 +307,7 @@
                     let productPrice = $(this).data("clickedElement").parent().parent().data("product-price");
                     let productName = $(this).data("clickedElement").parent().siblings("span").html();
                     let totalPrice = (productPrice * quantity).toFixed(2);
-                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productID + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
+                    $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
                     cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
                     updateCartTotal();
                     $(this).dialog("close");
@@ -368,27 +370,41 @@
         });
 
         $("#checkoutButton").click(function() {
-            let checkout = $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: window.location.pathname + "/submitCart",
-                type: "POST",
-                data: JSON.stringify(cart),
-                dataType: "JSON"
-            });
+            if (cart.length !== 0){
+                let checkout = $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    url: window.location.pathname + "/submitCart",
+                    type: "POST",
+                    data: JSON.stringify(cart),
+                    dataType: "JSON"
+                });
 
-            checkout.done(function (checkoutResult) {
-                $("#checkoutModal").css("display", "block");
-            });
+                checkout.done(function (checkoutResult) {
+                    if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
+                        $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
+                        $("#checkoutModal").css("display", "block");
+                    }
+                    else {
+			alert("Checkout failed, please try again...");
+		    }
+                });
 
-            checkout.fail(function (jqXHR, textStatus) {
-                alert("Checkout failed, please try again...");
-            });
+                checkout.fail(function (jqXHR, textStatus) {
+                    alert("Checkout failed, please try again...");
+                });
 
-            window.location = "/mainMenu";
+            }
+            else {
+                alert("The cart is empty.");
+            }
 
+        });
+        
+        $("#mainMenuButton").click(function() {
+	window.location = "/mainMenu";
         });
         
         $("#returnButton").click(function(){
