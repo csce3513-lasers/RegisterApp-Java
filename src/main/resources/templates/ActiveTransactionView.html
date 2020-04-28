@@ -384,7 +384,7 @@
 
                 checkout.done(function (checkoutResult) {
                     if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
-                        $("#checkoutModal").find("iframe").attr("src", "/mainMenu" + checkoutResult);
+                        $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
                         $("#checkoutModal").css("display", "block");
                     }
                     else {
