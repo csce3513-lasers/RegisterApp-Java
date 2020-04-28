@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+
+import antlr.collections.List;
 import edu.uark.registerapp.models.entities.TransactionEntryEntity;
 
 @Entity
@@ -50,6 +52,7 @@ public class Transaction extends ApiResponse{
 		this.transactionId = transactionId;
 		return this;
 	}
+
 
     @Column(name="total")
     private long total;
