@@ -3,6 +3,7 @@ package edu.uark.registerapp.controllers;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,6 +23,8 @@ import edu.uark.registerapp.commands.transactions.TransactionCreateCommand;
 import edu.uark.registerapp.models.api.CartItem;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.SearchResult;
+import edu.uark.registerapp.models.api.Transaction;
+
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -136,7 +139,8 @@ public class CheckoutRestController extends BaseRouteController {
 	   
 	    
 	//CREATE THE TRANSACTION IN THE DATABASE?    
-        final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
+        final Optional<edu.uark.registerapp.models.entities.ActiveUserEntity> activeUserEntity = this
+                .getCurrentUser(request);
         UUID cashierID = activeUserEntity.get().getEmployeeId();
                 
         this.transaction.setCashierId(cashierID);

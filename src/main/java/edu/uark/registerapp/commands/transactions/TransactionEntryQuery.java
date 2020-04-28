@@ -19,11 +19,10 @@ public class TransactionEntryQuery implements ResultCommandInterface<Transaction
 		final Optional<TransactionEntryEntity> transactionEntryEntity =
 			this.transactionEntryRepository.findById(this.transactionId);
 		if (transactionEntryEntity.isPresent()) {
-			return new Transaction(transactionEntryEntity.get());
-		} else {
+		}
 			throw new NotFoundException("Product");
 		}
-	}
+	
 
 	// Properties
 	private UUID transactionId;
