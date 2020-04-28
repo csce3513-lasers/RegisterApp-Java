@@ -17,6 +17,7 @@ import edu.uark.registerapp.commands.products.ProductByLookupCodeQuery;
 import edu.uark.registerapp.commands.products.ProductByPartialLookupCodeQuery;
 import edu.uark.registerapp.commands.products.ProductCreateCommand;
 import edu.uark.registerapp.commands.products.ProductQuery;
+import edu.uark.registerapp.commands.products.ProductUpdateCommand;
 import edu.uark.registerapp.commands.products.ProductsQuery;
 import edu.uark.registerapp.commands.transactions.TransactionCreateCommand;
 import edu.uark.registerapp.models.api.CartItem;
@@ -120,6 +121,19 @@ public class CheckoutRestController extends BaseRestController {
         for(CartItem item : cart) {
             System.out.println("Product ID: " + item.getProductID() + " Quantity: " + item.getProductQuantity());
         }
+
+        long totalPrice = cart.get(cart.size()-1).getTotalPrice(); // total price is stored on the last index
+        cart.remove(cart.size()-1);  
+	 
+	    
+	    //UPDATE THE STOCK?
+        for(CartItem item : cart) {
+            this.productByLookupCodeQuery.setLookupCode(item.getProductLookUpCode());
+            Product singleProduct = this.productByLookupCodeQuery.execute();
+            singleProduct.setCount(singleProduct.getCount() - item.getProductQuantity());
+            this.productUpdateCommand.setApiProduct(singleProduct);
+            this.productUpdateCommand.execute();
+        }
         
         //WHAT GETS RETURNED
         List<CartItem> searchResults = new ArrayList<CartItem>();
@@ -152,4 +166,6 @@ public class CheckoutRestController extends BaseRestController {
     private ProductsQuery productsQuery;
     @Autowired
     private ProductByPartialLookupCodeQuery productByPartialLookupCodeQuery;
+    @Autowired
+    private ProductUpdateCommand productUpdateCommand;
 }
