@@ -121,7 +121,7 @@ public class CheckoutRestController extends BaseRestController {
         for(CartItem item : cart) {
             System.out.println("Product ID: " + item.getProductID() + " Quantity: " + item.getProductQuantity());
         }
-
+        
         long totalPrice = cart.get(cart.size()-1).getTotalPrice(); // total price is stored on the last index
         cart.remove(cart.size()-1);  
 	 
