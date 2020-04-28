@@ -1,17 +1,18 @@
 package edu.uark.registerapp.models.api;
+import java.util.UUID;
 
 public class CartItem {
-    String productID;
+    UUID productID;
     int productQuantity;
 
-    public String getProductID() {
+    public UUID getProductID() {
         return productID;
     }
     public int getProductQuantity() {
         return productQuantity;
     }
     public void setProductID(String productID) {
-        this.productID = productID;
+        this.productID = UUID.fromString(productID);
     }
     public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;

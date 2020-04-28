@@ -1,18 +1,27 @@
 package edu.uark.registerapp.models.api;
 
+import java.util.UUID;
+
 
 public class SearchResult {
-    String productID;
+    UUID productID;
+    String productLookUpCode;
     double productPrice;
 
-    public String getProductID() {
+    public UUID getProductID() {
         return productID;
+    }
+    public String getProductLookUpCode() {
+        return productLookUpCode;
     }
     public double getProductPrice() {
         return productPrice;
     }
-    public void setProductID(String string) {
-        this.productID = string;
+    public void setProductID(UUID id) {
+        this.productID = id;
+    }
+    public void setProductLookUpCode(String string) {
+        this.productLookUpCode = string;
     }
     public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
