@@ -24,6 +24,7 @@ import edu.uark.registerapp.models.api.CartItem;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.SearchResult;
 import edu.uark.registerapp.models.api.Transaction;
+import edu.uark.registerapp.models.entities.ActiveUserEntity;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -139,8 +140,7 @@ public class CheckoutRestController extends BaseRouteController {
 	   
 	    
 	//CREATE THE TRANSACTION IN THE DATABASE?    
-        final Optional<edu.uark.registerapp.models.entities.ActiveUserEntity> activeUserEntity = this
-                .getCurrentUser(request);
+        final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
         UUID cashierID = activeUserEntity.get().getEmployeeId();
                 
         this.transaction.setCashierId(cashierID);
