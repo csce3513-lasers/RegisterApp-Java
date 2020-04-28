@@ -3,7 +3,6 @@ package edu.uark.registerapp.controllers;
 import edu.uark.registerapp.commands.exceptions.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,16 +22,13 @@ import edu.uark.registerapp.commands.transactions.TransactionCreateCommand;
 import edu.uark.registerapp.models.api.CartItem;
 import edu.uark.registerapp.models.api.Product;
 import edu.uark.registerapp.models.api.SearchResult;
-import edu.uark.registerapp.models.api.Transaction;
-import edu.uark.registerapp.models.entities.ActiveUserEntity;
-
 import java.util.Arrays;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/checkout")
 
-public class CheckoutRestController extends BaseRouteController {
+public class CheckoutRestController extends BaseRestController {
    
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public @ResponseBody List<SearchResult> search(final HttpServletRequest request) throws Exception
@@ -118,36 +114,20 @@ public class CheckoutRestController extends BaseRouteController {
    
    
     @RequestMapping(value = "/submitCart", method = RequestMethod.POST)
-    public @ResponseBody UUID checkout(@RequestBody final List<CartItem> cart, final HttpServletRequest request) throws Exception {
+    public @ResponseBody UUID checkout(@RequestBody final List<CartItem> cart) throws Exception {
         
         //TEST CODE PRINTS OUT CART
-        /*for(CartItem item : cart) {
-            System.out.println("Product ID: " + item.getProductID() + " Quantity: " + item.getProductQuantity());
-        }*/
-        
-        long totalPrice = cart.get(cart.size()-1).getTotalPrice(); // total price is stored on the last index
-        cart.remove(cart.size()-1);  
-	 
-	    
-	//UPDATE THE STOCK?
         for(CartItem item : cart) {
-            this.productByLookupCodeQuery.setLookupCode(item.getProductLookUpCode());
-            Product singleProduct = this.productByLookupCodeQuery.execute();
-            singleProduct.setCount(singleProduct.getCount() - item.getProductQuantity());
-            this.productUpdateCommand.setApiProduct(singleProduct);
-            this.productUpdateCommand.execute();
+            System.out.println("Product ID: " + item.getProductID() + " Quantity: " + item.getProductQuantity());
         }
-	   
-	    
-	//CREATE THE TRANSACTION IN THE DATABASE?    
-        final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
-        UUID cashierID = activeUserEntity.get().getEmployeeId();
-                
-        this.transaction.setCashierId(cashierID);
-        this.transaction.setTotal(totalPrice);
-        UUID transactionID = this.transaction.getReferenceId();
         
-        return transactionID;
+        //WHAT GETS RETURNED
+        List<CartItem> searchResults = new ArrayList<CartItem>();
+                //TRY TO CREATE ORDER
+        UUID orderID = UUID.randomUUID(); //RANDOM UUID FOR TESTING PURPOSES
+        
+        //WHAT GETS RETURNED
+        return orderID;
     }
     
      /*
@@ -172,8 +152,4 @@ public class CheckoutRestController extends BaseRouteController {
     private ProductsQuery productsQuery;
     @Autowired
     private ProductByPartialLookupCodeQuery productByPartialLookupCodeQuery;
-    @Autowired
-    private Transaction transaction;
-    @Autowired
-    private ProductCreateCommand productUpdateCommand;
 }
