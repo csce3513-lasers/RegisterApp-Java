@@ -380,10 +380,7 @@
                     type: "POST",
                     data: JSON.stringify(cart),
                     dataType: "JSON"
-                    window.location = "/mainMenu";
-                });
-
-                checkout.done(function (checkoutResult) {
+                }).done(function (checkoutResult) {
                     if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
                         $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
                         $("#checkoutModal").css("display", "block");
@@ -414,9 +411,7 @@
         });
 
         $("#cancelButton").click(function() {
-	        $("#cartItems").html("");
-            cart = [];
-            updateCartTotal();
+            window.location = "/mainMenu";
         });
 
         $("#clearCartButton").click(function() {
