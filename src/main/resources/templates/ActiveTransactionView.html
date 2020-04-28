@@ -372,7 +372,7 @@
 
         $("#checkoutButton").click(function() {
             if (cart.length !== 0){
-		cart.push({totalPrice: $("#cartTotal").val()});
+		cart.push({totalPrice: parseFloat($("#cartTotal").html().replace("Total: $", ""))});
 		console.log(cart);
                 let checkout = $.ajax({
                     headers: {
