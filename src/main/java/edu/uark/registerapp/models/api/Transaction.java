@@ -1,7 +1,6 @@
 package edu.uark.registerapp.models.api;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -13,9 +12,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-
-import antlr.collections.List;
-import edu.uark.registerapp.models.entities.TransactionEntryEntity;
 
 @Entity
 @Table(name="transaction")
@@ -41,19 +37,6 @@ public class Transaction extends ApiResponse{
 		return this;
 	}
 
-	@Column(name="transactionid")
-    private UUID transactionId;
-
-	public UUID getTransactionId() {
-		return this.transactionId;
-	}
-
-	public Transaction setTransactionId(final UUID transactionId) {
-		this.transactionId = transactionId;
-		return this;
-	}
-
-
     @Column(name="total")
     private long total;
 
@@ -65,32 +48,6 @@ public class Transaction extends ApiResponse{
 		this.total = total;
 		return this;
 	}
-
-	private int count;
-
-	public int getCount() {
-		return this.count;
-	}
-
-	public Transaction setCount(final int count) {
-		this.count = count;
-		return this;
-	}
-
-	
-    @Column(name="price")
-    private long price;
-
-	public long getPrice() {
-		return this.price;
-	}
-
-	public Transaction setPrice(final long price) {
-		this.price = price;
-		return this;
-	}
-	
-
 
 	@Column(name = "transactiontype")
 	private int type; // TODO: The idea is to map this to different types of transactions: Sale, Return, etc.
@@ -118,27 +75,30 @@ public class Transaction extends ApiResponse{
 
 	@Column(name = "createdon", insertable = false, updatable = false)
 	@Generated(GenerationTime.INSERT)
-	private String createdOn;
+	private LocalDateTime createdOn;
 
-	public String getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return this.createdOn;
 	}
 
-
-	public Transaction setCreatedOn(final LocalDateTime createdOn) {
-		this.createdOn =
-			createdOn.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-
-		return this;
-	}
-
 	public Transaction() {
-		super();
-
 		this.type = -1;
 		this.total = 0L;
 		this.id = new UUID(0, 0);
 		this.cashierId = new UUID(0, 0);
+		this.referenceId = new UUID(0, 0);
+	}
+
+	public Transaction(
+		final UUID cashierId,
+		final long total,
+		final int type
+	) {
+
+		this.type = type;
+		this.total = total;
+		this.id = new UUID(0, 0);
+		this.cashierId = cashierId;
 		this.referenceId = new UUID(0, 0);
 	}
 
@@ -154,16 +114,5 @@ public class Transaction extends ApiResponse{
 		this.id = new UUID(0, 0);
 		this.cashierId = cashierId;
 		this.referenceId = referenceId;
-	}
-
-	public Transaction(final TransactionEntryEntity transactionEntryEntity) {
-		super(false);
-
-		this.id = transactionEntryEntity.getId();
-		this.transactionId = transactionEntryEntity.getTransactionId();
-		this.price=transactionEntryEntity.getPrice();
-
-
-		this.setCreatedOn(transactionEntryEntity.getCreatedOn());
 	}
 }
