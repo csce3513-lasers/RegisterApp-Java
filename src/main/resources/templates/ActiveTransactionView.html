@@ -210,7 +210,8 @@
     <!-- Check out Modal -->
     <div id="checkoutModal" class="modal">
         <div class="modal-content">
-            <iframe src="" width="640" height="480"></iframe>
+            <!-- <iframe src="" width="640" height="480"></iframe> -->
+            <h1></h1>
             <button id="mainMenuButton" class="fancyButton">Main Menu</button>
         </div>
     </div>
@@ -249,7 +250,7 @@
 
             search.done(function(searchResult) {
                 searchResults = searchResult;
-                console.log(searchResults);
+                //console.log(searchResults);
                 $("#searchResults").html("");
                 if (searchResult.length !== 0 && searchResult !== null && typeof searchResult !== "undefined") {
                     $.each(searchResult, function(index, item) {
@@ -285,7 +286,7 @@
                     let productName = $(this).parent().siblings("span").html();
                     let totalPrice = (productPrice * quantity).toFixed(2);
                     $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                    cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
+                    cart.push({productID: productID, productPrice: productPrice, productLookUpCode: productName,  productQuantity: quantity});
                     updateCartTotal();
                 }
             }
@@ -308,7 +309,7 @@
                     let productName = $(this).data("clickedElement").parent().siblings("span").html();
                     let totalPrice = (productPrice * quantity).toFixed(2);
                     $("#cartItems").append('<div class="cartItem" data-product-id="' + productID + '" data-product-price="' + productPrice + '"><span class="cartProductQuantity">' + quantity + 'x</span><span class="cartProductName">' + productName + '</span><span class="cartProductPrice">$' + totalPrice + '</span></div>');
-                    cart.push({productID: productID, productPrice: productPrice,  productQuantity: quantity});
+                    cart.push({productID: productID, productPrice: productPrice, productLookUpCode: productName,  productQuantity: quantity});
                     updateCartTotal();
                     $(this).dialog("close");
                 },	
@@ -371,6 +372,7 @@
 
         $("#checkoutButton").click(function() {
             if (cart.length !== 0){
+		cart.push({totalPrice: $("#cartTotal").val()});
                 let checkout = $.ajax({
                     headers: {
                         'Accept': 'application/json',
@@ -380,14 +382,13 @@
                     type: "POST",
                     data: JSON.stringify(cart),
                     dataType: "JSON"
-                    window.location = "/mainMenu";
                 });
 
                 checkout.done(function (checkoutResult) {
-                    if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
-                        $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
+                    if (checkoutResult !== "" && checkoutResult !== null && typeof checkoutResult !== "undefined"){
+                        //$("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult); // change to proper routename
+                        $("#checkoutModal").find("h1").html("Transaction created with ID: " + checkoutResult);
                         $("#checkoutModal").css("display", "block");
-                        
                     }
                     else {
 			alert("Checkout failed, please try again...");
@@ -406,7 +407,7 @@
         });
         
         $("#mainMenuButton").click(function() {
-	        window.location = "/mainMenu";
+	    window.location = "/mainMenu";
         });
         
         $("#returnButton").click(function(){
@@ -414,9 +415,7 @@
         });
 
         $("#cancelButton").click(function() {
-	        $("#cartItems").html("");
-            cart = [];
-            updateCartTotal();
+            window.location = "/mainMenu";
         });
 
         $("#clearCartButton").click(function() {
