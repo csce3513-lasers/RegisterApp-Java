@@ -404,11 +404,17 @@
         });
         
         $("#mainMenuButton").click(function() {
-	window.location = "/mainMenu";
+	        window.location = "/mainMenu";
         });
         
         $("#returnButton").click(function(){
-            window.location ="/signIn";
+            window.location = "/signOut";
+        });
+
+        $("#cancelButton").click(function() {
+	        $("#cartItems").html("");
+            cart = [];
+            updateCartTotal();
         });
 
         $("#clearCartButton").click(function() {
