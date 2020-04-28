@@ -373,6 +373,7 @@
         $("#checkoutButton").click(function() {
             if (cart.length !== 0){
 		cart.push({totalPrice: $("#cartTotal").val()});
+		console.log(cart);
                 let checkout = $.ajax({
                     headers: {
                         'Accept': 'application/json',
