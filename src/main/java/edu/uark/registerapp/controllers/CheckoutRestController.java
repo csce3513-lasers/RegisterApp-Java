@@ -142,6 +142,9 @@ public class CheckoutRestController extends BaseRestController {
         
         //WHAT GETS RETURNED
         return orderID;
+
+        final Optional<ActiveUserEntity> activeUserEntity = this.getCurrentUser(request);
+        UUID cashierID = activeUserEntity.get().getEmployeeId();
     }
     
      /*
