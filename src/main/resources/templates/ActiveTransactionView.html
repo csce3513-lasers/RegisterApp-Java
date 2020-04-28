@@ -380,13 +380,14 @@
                     type: "POST",
                     data: JSON.stringify(cart),
                     dataType: "JSON"
+                    window.location = "/mainMenu";
                 });
 
                 checkout.done(function (checkoutResult) {
                     if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
                         $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
                         $("#checkoutModal").css("display", "block");
-                        window.location = "/mainMenu";
+                        
                     }
                     else {
 			alert("Checkout failed, please try again...");
