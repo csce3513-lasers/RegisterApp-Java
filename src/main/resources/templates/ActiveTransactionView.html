@@ -376,7 +376,7 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    url: window.location.pathname + "/checkout",
+                    url: window.location.pathname + "/submitCart",
                     type: "POST",
                     data: JSON.stringify(cart),
                     dataType: "JSON"
@@ -384,7 +384,7 @@
 
                 checkout.done(function (checkoutResult) {
                     if (checkoutResult !== "" && checkoutResult !== NULL && typeof checkoutResult !== "undefined"){
-                        $("#checkoutModal").find("iframe").attr("src", "/orderDetail/" + checkoutResult);
+                        $("#checkoutModal").find("iframe").attr("src", "/mainMenu" + checkoutResult);
                         $("#checkoutModal").css("display", "block");
                     }
                     else {
