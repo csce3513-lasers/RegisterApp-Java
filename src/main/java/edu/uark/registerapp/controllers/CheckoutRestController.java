@@ -150,4 +150,6 @@ public class CheckoutRestController extends BaseRestController {
     private ProductQuery productQuery;
     @Autowired
     private ProductsQuery productsQuery;
+    @Autowired
+    private ProductByPartialLookupCodeQuery productByPartialLookupCodeQuery;
 }
